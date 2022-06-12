@@ -13,7 +13,7 @@ public class SearchPost : Entity
     public DateTime? CloseDate { get; set; }
 
     private SearchPost()
-        : this(string.Empty, string.Empty, new Address(string.Empty, 0, 0), Guid.Empty, Enumerable.Empty<Pet>())
+        : this(string.Empty, string.Empty, new Address(), Guid.Empty, Enumerable.Empty<Pet>())
     {
     }
     
