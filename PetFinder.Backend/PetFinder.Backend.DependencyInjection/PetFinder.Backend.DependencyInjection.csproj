@@ -7,11 +7,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Bogus" Version="34.0.2" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="6.0.0" />
+    <PackageReference Include="Scrutor" Version="4.2.0" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\PetFinder.Backend.Domain\PetFinder.Backend.Domain.csproj" />
+    <ProjectReference Include="..\PetFinder.Infrastructure\PetFinder.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>

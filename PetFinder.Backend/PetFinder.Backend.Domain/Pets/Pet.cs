@@ -1,6 +1,6 @@
 ﻿namespace PetFinder.Backend.Domain.Pets;
 
-public class Pet
+public class Pet : Entity
 {
     public PetType Type { get; private set; }
     public Photo MainPhoto { get; private set; }
@@ -13,7 +13,7 @@ public class Pet
     public string[]? Diseases { get; set; }
     public string? Notes { get; set; }
 
-    private Pet() : this(PetType.Cat, Photo.Empty)
+    public Pet() : this(PetType.Cat, Photo.Empty)
     {
     }
     

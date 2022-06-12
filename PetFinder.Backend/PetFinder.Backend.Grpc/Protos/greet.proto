@@ -4,11 +4,16 @@ option csharp_namespace = "PetFinder.Backend.Grpc";
 
 package greet;
 
+import "google/protobuf/wrappers.proto";
+
 // The greeting service definition.
 service Greeter {
   // Sends a greeting
   rpc SayHello (HelloRequest) returns (HelloReply);
+  rpc GetAllPets(EmptyRequest) returns (stream .greet.PetResponse);
 }
+
+message EmptyRequest {}
 
 // The request message containing the user's name.
 message HelloRequest {
@@ -18,4 +23,28 @@ message HelloRequest {
 // The response message containing the greetings.
 message HelloReply {
   string message = 1;
+}
+
+message PetResponse {
+	UUID Id = 1;
+	PetType Type = 2;
+	google.protobuf.StringValue Name = 3;
+	google.protobuf.UInt32Value Age = 4;
+	NullableBool Sterilized = 5;
+	repeated string Vaccination = 6;
+	repeated string Diseases = 7;
+}
+
+message UUID {
+	string value = 1;
+}
+
+enum PetType {
+	Cat = 0;
+	Dog = 1;
+}
+
+message NullableBool {
+	bool NullValue = 1;
+	bool Value = 2;
 }
