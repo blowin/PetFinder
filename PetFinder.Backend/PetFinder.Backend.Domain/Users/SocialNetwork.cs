@@ -1,3 +1,15 @@
 ﻿namespace PetFinder.Backend.Domain.Users;
 
-public record SocialNetwork(string Name, string Link);
+public class SocialNetwork
+{
+    public string Name { get; private set; } = string.Empty;
+    public string Link { get; private set; } = string.Empty;
+
+    private SocialNetwork(){}
+
+    public SocialNetwork(string name, string link)
+    {
+        Name = name;
+        Link = link;
+    }
+}

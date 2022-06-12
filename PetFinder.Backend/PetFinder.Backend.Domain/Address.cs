@@ -1,3 +1,8 @@
 ﻿namespace PetFinder.Backend.Domain;
 
-public record Address(string FullAddress, double Latitude, double Longitude);
+public class Address
+{
+    public string FullAddress { get; set; } = string.Empty;
+    public double Latitude { get; set; }
+    public double Longitude { get; set; }
+}

@@ -6,7 +6,7 @@ public class Pet
     public Photo MainPhoto { get; private set; }
     
     public string? Name { get; set; }
-    public Photo[]? AdditionalPhotos { get; set; }
+    public List<Photo>? AdditionalPhotos { get; set; }
     public byte? Age { get; set; }
     public bool? Sterilized { get; set; }
     public string[]? Vaccination { get; set; }

@@ -6,7 +6,7 @@ public class Photo : Entity
     
     public byte[] Content { get; private set; }
 
-    public Photo() : this(Array.Empty<byte>())
+    private Photo() : this(Array.Empty<byte>())
     {
     }
     
