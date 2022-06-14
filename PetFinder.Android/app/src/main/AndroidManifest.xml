@@ -10,7 +10,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.PetFinder">
         <activity
-            android:name=".unitConverterApp.ComposeUnitConverterActivity"
+            android:name=".loginScreen.ComposeUnitConverterActivity"
             android:exported="true"
             android:theme="@style/Theme.PetFinder">
             <intent-filter>

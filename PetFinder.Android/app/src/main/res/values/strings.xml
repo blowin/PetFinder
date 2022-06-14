@@ -29,4 +29,7 @@
     <string name="login_screen_title">Login</string>
     <string name="login_screen_description">Please sign in to continue</string>
     <string name="sign_in_button">Sign In</string>
+    <string name="sign_up_text_button">sign up</string>
+    <string name="forgot_password_text_button">forgot password?</string>
+    <string name="or_text">or</string>
 </resources>
