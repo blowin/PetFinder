@@ -32,4 +32,5 @@
     <string name="sign_up_text_button">sign up</string>
     <string name="forgot_password_text_button">forgot password?</string>
     <string name="or_text">or</string>
+    <string name="show_password">show password</string>
 </resources>
