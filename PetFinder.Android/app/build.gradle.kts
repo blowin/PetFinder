@@ -6,12 +6,12 @@ plugins {
 }
 
 android {
-    compileSdk = versions.targetSdk
+    compileSdk = ConfigVers.targetSdk
 
     defaultConfig {
         applicationId = "com.lefarmico.petfinder"
-        minSdk = versions.minSdk
-        targetSdk = versions.targetSdk
+        minSdk = ConfigVers.minSdk
+        targetSdk = ConfigVers.targetSdk
         versionCode = 1
         versionName = "0.0.1"
 
@@ -39,7 +39,7 @@ android {
         compose = true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion = versions.compose
+        kotlinCompilerExtensionVersion = ConfigVers.compose
     }
     packagingOptions {
         resources { excludes += "/META-INF/{AL2.0,LGPL2.1}" }
@@ -47,28 +47,29 @@ android {
 }
 
 dependencies {
+    implementation(project(mapOf("path" to ":core")))
 
     //  --- compose ---
-    implementation(deps.composeUi)
-    implementation(deps.composeMaterial)
-    implementation(deps.composeUiToolingPreview)
-    implementation(deps.constraintCompose)
-    implementation(deps.composeLiveData)
-    implementation(deps.composeLifecycleViewModel)
-    implementation(deps.composeNavigation)
+    implementation(Config.composeUi)
+    implementation(Config.composeMaterial)
+    implementation(Config.composeUiToolingPreview)
+    implementation(Config.constraintCompose)
+    implementation(Config.composeLiveData)
+    implementation(Config.composeLifecycleViewModel)
+    implementation(Config.composeNavigation)
 
     // --- core ---
-    implementation(deps.core)
-    implementation(deps.lifecycleRuntime)
-    implementation(deps.activityCompose)
-    implementation(deps.sharedPreferences)
+    implementation(Config.core)
+    implementation(Config.lifecycleRuntime)
+    implementation(Config.activityCompose)
+    implementation(Config.sharedPreferences)
 
     // --- testing ---
-    testImplementation(deps.jUnit)
-    androidTestImplementation(deps.jUnitExt)
-    androidTestImplementation(deps.espresso)
-    androidTestImplementation(deps.jUnitCompose)
+    testImplementation(Config.jUnit)
+    androidTestImplementation(Config.jUnitExt)
+    androidTestImplementation(Config.espresso)
+    androidTestImplementation(Config.jUnitCompose)
 
     // --- debug ---
-    debugImplementation(deps.composeUiTooling)
+    debugImplementation(Config.composeUiTooling)
 }
