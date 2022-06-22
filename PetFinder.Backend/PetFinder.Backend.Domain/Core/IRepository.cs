@@ -9,5 +9,5 @@ public interface IRepository<T>
     
     T GetById(Guid id);
 
-    IEnumerable<T> GetAll();
+    Page<T> GetPage(int number, int pageSize = Constants.PageSize);
 }

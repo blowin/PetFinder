@@ -10,10 +10,13 @@ import "google/protobuf/wrappers.proto";
 service Greeter {
   // Sends a greeting
   rpc SayHello (HelloRequest) returns (HelloReply);
-  rpc GetAllPets(EmptyRequest) returns (stream .greet.PetResponse);
+  rpc GetPets(PageRequest) returns (stream .greet.PetResponse);
 }
 
-message EmptyRequest {}
+message PageRequest {
+	int32 page = 1;
+	int32 pageSize = 2;
+}
 
 // The request message containing the user's name.
 message HelloRequest {

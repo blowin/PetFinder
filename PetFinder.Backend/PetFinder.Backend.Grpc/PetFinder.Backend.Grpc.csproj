@@ -12,11 +12,16 @@
     </ItemGroup>
 
     <ItemGroup>
+        <PackageReference Include="Calzolari.Grpc.AspNetCore.Validation" Version="6.1.1" />
         <PackageReference Include="Grpc.AspNetCore" Version="2.46.0" />
     </ItemGroup>
 
     <ItemGroup>
       <ProjectReference Include="..\PetFinder.Backend.DependencyInjection\PetFinder.Backend.DependencyInjection.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Validators\" />
     </ItemGroup>
 
 </Project>

@@ -9,9 +9,9 @@ namespace PetFinder.Backend.Grpc.Services;
 public class GreeterService : Greeter.GreeterBase
 {
     private readonly ILogger<GreeterService> _logger;
-    private IRepository<Domain.Pets.Pet> _petRepository;
+    private IRepository<Pet> _petRepository;
 
-    public GreeterService(ILogger<GreeterService> logger, IRepository<Domain.Pets.Pet> petRepository)
+    public GreeterService(ILogger<GreeterService> logger, IRepository<Pet> petRepository)
     {
         _logger = logger;
         _petRepository = petRepository;
@@ -25,9 +25,9 @@ public class GreeterService : Greeter.GreeterBase
         });
     }
     
-    public override async Task GetAllPets(EmptyRequest request, IServerStreamWriter<PetResponse> responseStream, ServerCallContext context)
+    public override async Task GetPets(PageRequest request, IServerStreamWriter<PetResponse> responseStream, ServerCallContext context)
     {
-        var pets = _petRepository.GetAll().Take(10)
+        var pets = _petRepository.GetPage(request.Page, request.PageSize)
             .Select(pet => new PetResponse
             {
                 Id = new UUID

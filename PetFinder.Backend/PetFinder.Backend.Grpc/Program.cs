@@ -1,5 +1,8 @@
+using Calzolari.Grpc.AspNetCore.Validation;
 using PetFinder.Backend.DependencyInjection;
+using PetFinder.Backend.Grpc;
 using PetFinder.Backend.Grpc.Services;
+using PetFinder.Backend.Grpc.Validators;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -7,8 +10,12 @@ var builder = WebApplication.CreateBuilder(args);
 // For instructions on how to configure Kestrel and gRPC clients on macOS, visit https://go.microsoft.com/fwlink/?linkid=2099682
 
 // Add services to the container.
-builder.Services.AddGrpc();
+builder.Services.AddGrpc(options => options.EnableMessageValidation());
 builder.Services.AddAppServices();
+
+builder.Services.AddValidator<PageRequestValidator>(ServiceLifetime.Singleton);
+
+builder.Services.AddGrpcValidation();
 
 var app = builder.Build();
 
