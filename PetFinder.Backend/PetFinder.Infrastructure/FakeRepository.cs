@@ -32,7 +32,7 @@ public abstract class FakeRepository<T> : IRepository<T>
 
     public T GetById(Guid id) => Items[id];
 
-    public IEnumerable<T> GetAll() => Items.Values;
+    public Page<T> GetPage(int pageNumber, int pageSize = Constants.PageSize) => Items.Values.ToPage(pageNumber, pageSize);
 
     protected abstract IEnumerable<T> GenerateItems();
 }
