@@ -8,4 +8,6 @@ sealed class LoginEvent {
     object SingUpPressed : LoginEvent()
     object ForgotPassPressed : LoginEvent()
     object ToastShowed : LoginEvent()
+
+    object ReloadPressed : LoginEvent()
 }

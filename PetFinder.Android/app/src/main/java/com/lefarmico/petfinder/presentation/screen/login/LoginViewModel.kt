@@ -6,13 +6,14 @@ import com.lefarmico.core.extension.cast
 import com.lefarmico.petfinder.presentation.screen.login.model.LoginEvent
 import com.lefarmico.petfinder.presentation.screen.login.model.LoginState
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.delay
 import javax.inject.Inject
 
 @HiltViewModel
 class LoginViewModel @Inject constructor() : MviViewModel<BaseState<LoginState>, LoginEvent>() {
 
     init {
-        setState(BaseState.Data(LoginState()))
+        testStart()
     }
 
     override fun onTriggerEvent(event: LoginEvent) {
@@ -24,7 +25,18 @@ class LoginViewModel @Inject constructor() : MviViewModel<BaseState<LoginState>,
             LoginEvent.ForgotPassPressed -> setToast("ForgotPass pressed")
             LoginEvent.SingUpPressed -> setToast("SignUp pressed")
             LoginEvent.ToastShowed -> resetToast()
+            LoginEvent.ReloadPressed -> testContent()
         }
+    }
+
+    private fun testStart() = safeLaunch {
+        setState(BaseState.Loading)
+        delay(3000)
+        setState(BaseState.Error(NullPointerException()))
+    }
+
+    private fun testContent() = safeLaunch {
+        setState(BaseState.Data(LoginState()))
     }
 
     private fun resetToast() = safeLaunch {
