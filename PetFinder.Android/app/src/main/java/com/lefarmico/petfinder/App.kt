@@ -2,15 +2,14 @@ package com.lefarmico.petfinder
 
 import com.lefarmico.core.base.app.ApplicationConfigInitializer
 import com.lefarmico.core.base.app.BaseApplication
-import com.lefarmico.core.base.app.config.TimberConfig
+import dagger.hilt.android.HiltAndroidApp
+import javax.inject.Inject
 
+@HiltAndroidApp
 class App : BaseApplication() {
 
-    private val appConfigInitializer = ApplicationConfigInitializer(
-        TimberConfig(isDebug)
-    )
-
-    private val isDebug get() = BuildConfig.DEBUG
+    @Inject
+    lateinit var appConfigInitializer: ApplicationConfigInitializer
 
     override fun onCreate() {
         super.onCreate()

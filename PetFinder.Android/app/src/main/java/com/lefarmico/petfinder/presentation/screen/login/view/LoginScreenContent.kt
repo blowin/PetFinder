@@ -12,22 +12,37 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ChainStyle
 import androidx.constraintlayout.compose.ConstraintLayout
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavController
 import com.lefarmico.petfinder.R
 import com.lefarmico.petfinder.presentation.screen.login.LoginViewModel
 import com.lefarmico.petfinder.presentation.screen.login.model.LoginEvent
 import com.lefarmico.petfinder.presentation.screen.login.model.LoginState
+import com.lefarmico.petfinder.presentation.screen.login.view.component.PasswordTextField
+import com.lefarmico.petfinder.presentation.screen.login.view.component.ShowPasswordCheckBox
+import com.lefarmico.petfinder.presentation.screen.login.view.component.SignUpTextClickable
+import com.lefarmico.petfinder.presentation.screen.login.view.component.UsernameTextField
+import com.lefarmico.petfinder.ui.view.ShowToast
 
 @Composable
 fun LoginScreenContent(
     modifier: Modifier = Modifier,
-    viewModel: LoginViewModel = viewModel(modelClass = LoginViewModel::class.java),
+    navController: NavController,
+    viewModel: LoginViewModel = hiltViewModel(),
     viewState: LoginState
 ) {
     val focusManager = LocalFocusManager.current
     val login = viewState.loginField
     val password = viewState.passwordField
     val passwordCheckBox = viewState.showPasswordCheckBox
+    val toast = viewState.toast
+
+    if (toast != null) {
+        ShowToast(message = toast.message)
+        viewModel.onTriggerEvent(LoginEvent.ToastShowed)
+    }
+
     ConstraintLayout(
         modifier = modifier
             .fillMaxSize()
@@ -71,7 +86,11 @@ fun LoginScreenContent(
                     end.linkTo(parent.end)
                 },
             onValueChange = { value ->
-                viewModel.setLoginField(value)
+                viewModel.onTriggerEvent(
+                    LoginEvent.SetLoginField(
+                        value = value
+                    )
+                )
             },
             onActionClick = {
                 focusManager.clearFocus()
@@ -87,7 +106,11 @@ fun LoginScreenContent(
                     end.linkTo(usernameField.end)
                 },
             onValueChange = { value ->
-                viewModel.setPasswordField(value)
+                viewModel.onTriggerEvent(
+                    LoginEvent.SetPasswordField(
+                        value = value
+                    )
+                )
             },
             onActionClick = {
                 focusManager.clearFocus()
@@ -98,8 +121,12 @@ fun LoginScreenContent(
                 start.linkTo(usernameField.start)
             },
             isChecked = passwordCheckBox,
-            onCheckChange = {
-                viewModel.showPassword(it)
+            onCheckChange = { isChecked ->
+                viewModel.onTriggerEvent(
+                    LoginEvent.SetPasswordVisibility(
+                        value = isChecked
+                    )
+                )
             }
         )
         SignUpTextClickable(
@@ -108,10 +135,20 @@ fun LoginScreenContent(
                 .constrainAs(signUpPassword) {
                     start.linkTo(usernameField.start)
                     end.linkTo(usernameField.end)
-                }
+                },
+            onForgotPasswordClick = {
+                viewModel.onTriggerEvent(
+                    LoginEvent.ForgotPassPressed
+                )
+            },
+            onSignUpClick = {
+                viewModel.onTriggerEvent(
+                    LoginEvent.SingUpPressed
+                )
+            }
         )
         Button(
-            onClick = { viewModel.onTriggerEvent(LoginEvent.SingIn) },
+            onClick = { viewModel.onTriggerEvent(LoginEvent.SingInPressed) },
             modifier = Modifier.constrainAs(signInButton) {
                 bottom.linkTo(parent.bottom)
                 start.linkTo(parent.start)

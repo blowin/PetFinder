@@ -37,21 +37,21 @@ android {
 dependencies {
 
     // ----- core -----
-    implementation(Config.core)
-    implementation(Config.appCompat)
-    implementation(Config.lifecycleRuntime)
-    implementation(Config.lifecycleViewModel)
+    implementation(Config.Common.Core)
+    implementation(Config.Common.AppCompat)
+    implementation(Config.Common.LifecycleRuntime)
+    implementation(Config.Common.LifecycleViewModel)
 
     // ----- common -----
-    implementation(Config.timber)
+    implementation(Config.Common.Timber)
 
     // ----- testing ------
-    testImplementation(Config.jUnit)
-    androidTestImplementation(Config.jUnitExt)
-    androidTestImplementation(Config.espresso)
-    testImplementation(Config.coroutineTest)
+    testImplementation(Config.Testing.jUnit)
+    androidTestImplementation(Config.Testing.jUnitExt)
+    androidTestImplementation(Config.Testing.Espresso)
+    testImplementation(Config.Coroutine.Test)
 
     // ----- coroutine -----
-    implementation(Config.coroutineCore)
-    implementation(Config.coroutineAndroid)
+    implementation(Config.Coroutine.Core)
+    implementation(Config.Coroutine.Android)
 }

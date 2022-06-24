@@ -5,8 +5,11 @@ import com.lefarmico.core.base.mvi.MviViewModel
 import com.lefarmico.core.extension.cast
 import com.lefarmico.petfinder.presentation.screen.login.model.LoginEvent
 import com.lefarmico.petfinder.presentation.screen.login.model.LoginState
+import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 
-class LoginViewModel : MviViewModel<BaseState<LoginState>, LoginEvent>() {
+@HiltViewModel
+class LoginViewModel @Inject constructor() : MviViewModel<BaseState<LoginState>, LoginEvent>() {
 
     init {
         setState(BaseState.Data(LoginState()))
@@ -17,23 +20,38 @@ class LoginViewModel : MviViewModel<BaseState<LoginState>, LoginEvent>() {
             is LoginEvent.SetLoginField -> setLoginField(event.value)
             is LoginEvent.SetPasswordField -> setPasswordField(event.value)
             is LoginEvent.SetPasswordVisibility -> showPassword(event.value)
-            LoginEvent.SingIn -> setState(BaseState.Data(LoginState()))
+            LoginEvent.SingInPressed -> setToast("SignIn pressed")
+            LoginEvent.ForgotPassPressed -> setToast("ForgotPass pressed")
+            LoginEvent.SingUpPressed -> setToast("SignUp pressed")
+            LoginEvent.ToastShowed -> resetToast()
         }
     }
 
-    fun setLoginField(value: String) = safeLaunch {
+    private fun resetToast() = safeLaunch {
+        tryUpdateState {
+            it.copy(toast = null)
+        }
+    }
+
+    private fun setToast(message: String) = safeLaunch {
+        tryUpdateState {
+            it.copy(toast = LoginState.Toast(message))
+        }
+    }
+
+    private fun setLoginField(value: String) = safeLaunch {
         tryUpdateState {
             it.copy(loginField = value)
         }
     }
 
-    fun setPasswordField(value: String) = safeLaunch {
+    private fun setPasswordField(value: String) = safeLaunch {
         tryUpdateState {
             it.copy(passwordField = value)
         }
     }
 
-    fun showPassword(value: Boolean) = safeLaunch {
+    private fun showPassword(value: Boolean) = safeLaunch {
         tryUpdateState {
             it.copy(showPasswordCheckBox = value)
         }
