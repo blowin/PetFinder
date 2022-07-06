@@ -1,81 +1,97 @@
 package com.lefarmico.petfinder.presentation.screen.login
 
-import com.lefarmico.core.base.mvi.BaseState
 import com.lefarmico.core.base.mvi.MviViewModel
-import com.lefarmico.core.extension.cast
 import com.lefarmico.petfinder.presentation.screen.login.model.LoginEvent
 import com.lefarmico.petfinder.presentation.screen.login.model.LoginState
+import com.lefarmico.petfinder.utils.combine
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.combine
 import javax.inject.Inject
 
 @HiltViewModel
-class LoginViewModel @Inject constructor() : MviViewModel<BaseState<LoginState>, LoginEvent>() {
+class LoginViewModel @Inject constructor() : MviViewModel<LoginState, LoginEvent>() {
+
+    override val _state = MutableStateFlow(LoginState())
+    override val state = _state.asStateFlow()
+
+    private val loginField = MutableStateFlow("")
+    private val passwordField = MutableStateFlow("")
+    private val showPasswordCheckBox = MutableStateFlow(false)
+    private val loading = MutableStateFlow(false)
+    private val errorMessage = MutableStateFlow<String?>(null)
+    private val isSignedIn = MutableStateFlow(false)
 
     init {
-        testStart()
+        safeLaunch {
+            combine(
+                loginField,
+                passwordField,
+                showPasswordCheckBox,
+                loading,
+                errorMessage,
+                isSignedIn
+            ) { login, password, showPassword, loading, error, signedIn ->
+                LoginState(
+                    loginField = login,
+                    passwordField = password,
+                    showPasswordCheckBox = showPassword,
+                    isLoading = loading,
+                    errorMsg = error,
+                    isSignedIn = signedIn
+                )
+            }.catch { throwable ->
+                throw throwable
+            }.collect {
+                _state.value = it
+            }
+        }
     }
 
     override fun onTriggerEvent(event: LoginEvent) {
         when (event) {
-            is LoginEvent.SetLoginField -> setLoginField(event.value)
-            is LoginEvent.SetPasswordField -> setPasswordField(event.value)
-            is LoginEvent.SetPasswordVisibility -> showPassword(event.value)
-            LoginEvent.SingInPressed -> setToast("SignIn pressed")
-            LoginEvent.ForgotPassPressed -> setToast("ForgotPass pressed")
-            LoginEvent.SingUpPressed -> setToast("SignUp pressed")
-            LoginEvent.ToastShowed -> resetToast()
-            LoginEvent.ReloadPressed -> testContent()
+            is LoginEvent.SetLoginField -> onLoginFieldChanged(event.value)
+            is LoginEvent.SetPasswordField -> onPasswordFieldChanged(event.value)
+            is LoginEvent.SetPasswordVisibility -> onShowPasswordSwitchChanged(event.value)
+            is LoginEvent.SingInPressed -> onSignInPressed()
+            LoginEvent.ForgotPassPressed -> {}
+            LoginEvent.SingUpPressed -> test()
+            LoginEvent.ErrorMessageShown -> onErrorMessageShown()
+            LoginEvent.CheckForSignedIn -> checkForSignedIn()
         }
     }
 
-    private fun testStart() = safeLaunch {
-        setState(BaseState.Loading)
+    private fun checkForSignedIn() {
+        isSignedIn.value = false
+    }
+
+    private fun onSignInPressed() = safeLaunch {
+        loading.value = true
         delay(3000)
-        setState(BaseState.Error(NullPointerException()))
+        loading.value = false
+        errorMessage.value = "Login failed"
     }
 
-    private fun testContent() = safeLaunch {
-        setState(BaseState.Data(LoginState()))
+    private fun onErrorMessageShown() = safeLaunch {
+        errorMessage.value = null
     }
 
-    private fun resetToast() = safeLaunch {
-        tryUpdateState {
-            it.copy(toast = null)
-        }
+    private fun onLoginFieldChanged(value: String) = safeLaunch {
+        loginField.value = value
     }
 
-    private fun setToast(message: String) = safeLaunch {
-        tryUpdateState {
-            it.copy(toast = LoginState.Toast(message))
-        }
+    private fun onPasswordFieldChanged(value: String) = safeLaunch {
+        passwordField.value = value
     }
 
-    private fun setLoginField(value: String) = safeLaunch {
-        tryUpdateState {
-            it.copy(loginField = value)
-        }
+    private fun onShowPasswordSwitchChanged(value: Boolean) = safeLaunch {
+        showPasswordCheckBox.value = value
     }
 
-    private fun setPasswordField(value: String) = safeLaunch {
-        tryUpdateState {
-            it.copy(passwordField = value)
-        }
-    }
-
-    private fun showPassword(value: Boolean) = safeLaunch {
-        tryUpdateState {
-            it.copy(showPasswordCheckBox = value)
-        }
-    }
-
-    private fun tryUpdateState(newState: (LoginState) -> LoginState) = safeLaunch {
-        val currentState = when (uiState.value) {
-            is BaseState.Data -> uiState.value.cast<BaseState.Data<LoginState>>().value
-            BaseState.Empty -> LoginState()
-            is BaseState.Error -> LoginState()
-            BaseState.Loading -> LoginState()
-        }
-        setState(BaseState.Data(newState(currentState)))
+    private fun test() {
+        isSignedIn.value = true
     }
 }
