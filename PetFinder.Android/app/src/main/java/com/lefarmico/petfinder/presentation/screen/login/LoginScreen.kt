@@ -2,7 +2,10 @@ package com.lefarmico.petfinder.presentation.screen.login
 
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Face
 import androidx.compose.material3.Button
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -20,10 +23,10 @@ import com.lefarmico.petfinder.R
 import com.lefarmico.petfinder.presentation.navigation.NavigationActions
 import com.lefarmico.petfinder.presentation.navigation.NavigationActionsDemoImpl
 import com.lefarmico.petfinder.presentation.screen.login.model.LoginEvent
-import com.lefarmico.petfinder.presentation.screen.login.view.component.PasswordTextField
-import com.lefarmico.petfinder.presentation.screen.login.view.component.ShowPasswordCheckBox
-import com.lefarmico.petfinder.presentation.screen.login.view.component.SignUpTextClickable
-import com.lefarmico.petfinder.presentation.screen.login.view.component.UsernameTextField
+import com.lefarmico.petfinder.presentation.screen.login.view.SignUpTextClickable
+import com.lefarmico.petfinder.ui.theme.petfinder.PF_PasswordTextField
+import com.lefarmico.petfinder.ui.theme.petfinder.PF_TextField
+import com.lefarmico.petfinder.ui.theme.petfinder.PF_TextWithCheckBox
 import com.lefarmico.petfinder.ui.view.ForegroundLoading
 import com.lefarmico.petfinder.ui.view.ShowToast
 
@@ -44,12 +47,6 @@ fun LoginScreen(
     val isSignedIn = state.isSignedIn
 
     viewModel.onTriggerEvent(LoginEvent.CheckForSignedIn)
-
-    if (errorMessage != null) {
-        ShowToast(message = errorMessage) {
-            viewModel.onTriggerEvent(LoginEvent.ErrorMessageShown)
-        }
-    }
 
     ConstraintLayout(
         modifier = modifier
@@ -87,13 +84,21 @@ fun LoginScreen(
                 top.linkTo(topBar.bottom)
             }
         )
-        UsernameTextField(
+        // UserName
+        PF_TextField(
             modifier = Modifier
                 .constrainAs(usernameField) {
                     start.linkTo(parent.start)
                     end.linkTo(parent.end)
                 },
-            userName = login,
+            value = login,
+            leadingIcon = {
+                Icon(
+                    imageVector = Icons.Filled.Face,
+                    contentDescription = stringResource(id = R.string.username)
+                )
+            },
+            label = stringResource(id = R.string.username),
             onValueChange = { value ->
                 viewModel.onTriggerEvent(
                     LoginEvent.SetLoginField(
@@ -105,16 +110,16 @@ fun LoginScreen(
                 focusManager.clearFocus()
             }
         )
-        PasswordTextField(
+        // Password field
+        PF_PasswordTextField(
             modifier = Modifier
                 .padding(top = verticalPadding)
                 .constrainAs(passwordField) {
                     start.linkTo(usernameField.start)
                     end.linkTo(usernameField.end)
                 },
-            password = password,
-            isPasswordShown = passwordCheckBox,
-            isEnabled = !isLoading,
+            value = password,
+            showPassword = passwordCheckBox,
             onValueChange = { value ->
                 viewModel.onTriggerEvent(
                     LoginEvent.SetPasswordField(
@@ -122,14 +127,17 @@ fun LoginScreen(
                     )
                 )
             },
+            label = stringResource(id = R.string.password),
             onActionClick = {
                 focusManager.clearFocus()
             }
         )
-        ShowPasswordCheckBox(
+        // Show password check box
+        PF_TextWithCheckBox(
             modifier = Modifier.constrainAs(showPassword) {
                 start.linkTo(usernameField.start)
             },
+            text = stringResource(id = R.string.show_password),
             isChecked = passwordCheckBox,
             onCheckChange = { isChecked ->
                 viewModel.onTriggerEvent(
@@ -171,6 +179,12 @@ fun LoginScreen(
             },
         ) {
             Text(text = stringResource(id = R.string.sign_in_button))
+        }
+    }
+
+    if (errorMessage != null) {
+        ShowToast(message = errorMessage) {
+            viewModel.onTriggerEvent(LoginEvent.ErrorMessageShown)
         }
     }
 

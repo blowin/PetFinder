@@ -5,6 +5,7 @@
     <string name="done">Done</string>
     <string name="hint">Your name</string>
     <string name="pop_up">Back to last screen</string>
+    <string name="email">Email</string>
 
     <string name="convert">Convert</string>
     <string name="template">%1$s %2$s</string>
@@ -41,6 +42,8 @@
 
     <!-- registration -->
     <string name="registration_screen_name">Registration</string>
+    <string name="cd_email">Enter your email</string>
+    <string name="confirm_password">Confirm password</string>
 
     <!-- errors -->
     <string name="empty_field">The text should not be empty</string>
