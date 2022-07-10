@@ -71,7 +71,7 @@ dependencies {
 
     //  --- compose ---
     implementation(Config.Compose.UI)
-    implementation(Config.Compose.Material)
+    implementation(Config.Compose.MaterialYou)
     implementation(Config.Compose.ToolingPreview)
     implementation(Config.Compose.ConstrainLayout)
     implementation(Config.Compose.LiveData)

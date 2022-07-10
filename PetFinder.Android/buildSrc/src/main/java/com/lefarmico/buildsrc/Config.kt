@@ -5,12 +5,17 @@ object Config {
     object Compose {
         const val UI = "androidx.compose.ui:ui:${ConfigVers.compose}"
         const val Material = "androidx.compose.material:material:${ConfigVers.compose}"
+        const val MaterialYou = "androidx.compose.material3:material3:${Versions.MaterialYou}"
         const val ToolingPreview =
             "androidx.compose.ui:ui-tooling-preview:${ConfigVers.compose}"
         const val Tooling = "androidx.compose.ui:ui-tooling:${ConfigVers.compose}"
         const val ConstrainLayout = "androidx.constraintlayout:constraintlayout-compose:${ConfigVers.constraint_compose}"
         const val LiveData = "androidx.compose.runtime:runtime-livedata:${ConfigVers.compose}"
         const val LifecycleViewModel = "androidx.lifecycle:lifecycle-viewmodel-compose:${ConfigVers.lifecycle_runtime}"
+
+        object Versions {
+            const val MaterialYou = "1.0.0-alpha13"
+        }
     }
 
     object Navigation {

@@ -2,21 +2,23 @@ package com.lefarmico.petfinder.presentation.screen.login
 
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.Button
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
+import androidx.compose.material3.Button
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ChainStyle
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.lefarmico.petfinder.R
 import com.lefarmico.petfinder.presentation.navigation.NavigationActions
+import com.lefarmico.petfinder.presentation.navigation.NavigationActionsDemoImpl
 import com.lefarmico.petfinder.presentation.screen.login.model.LoginEvent
 import com.lefarmico.petfinder.presentation.screen.login.view.component.PasswordTextField
 import com.lefarmico.petfinder.presentation.screen.login.view.component.ShowPasswordCheckBox
@@ -44,8 +46,9 @@ fun LoginScreen(
     viewModel.onTriggerEvent(LoginEvent.CheckForSignedIn)
 
     if (errorMessage != null) {
-        ShowToast(message = errorMessage)
-        viewModel.onTriggerEvent(LoginEvent.ErrorMessageShown)
+        ShowToast(message = errorMessage) {
+            viewModel.onTriggerEvent(LoginEvent.ErrorMessageShown)
+        }
     }
 
     ConstraintLayout(
@@ -68,15 +71,16 @@ fun LoginScreen(
         }
         Text(
             text = stringResource(id = R.string.login_screen_title),
-            style = MaterialTheme.typography.h2,
+            style = MaterialTheme.typography.headlineLarge,
             modifier = Modifier.constrainAs(topBar) {
                 top.linkTo(parent.top)
                 start.linkTo(parent.start)
+                end.linkTo(parent.end)
             }
         )
         Text(
             text = stringResource(id = R.string.login_screen_description),
-            style = MaterialTheme.typography.subtitle1,
+            style = MaterialTheme.typography.bodyLarge,
             modifier = Modifier.constrainAs(description) {
                 start.linkTo(parent.start)
                 end.linkTo(parent.end)
@@ -148,9 +152,7 @@ fun LoginScreen(
                 )
             },
             onSignUpClick = {
-                viewModel.onTriggerEvent(
-                    LoginEvent.SingUpPressed
-                )
+                navigationActions.navigateToRegistration()
             }
         )
         Button(
@@ -179,4 +181,10 @@ fun LoginScreen(
         ForegroundLoading()
         focusManager.clearFocus()
     }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun LoginScreenDemo() {
+    LoginScreen(navigationActions = NavigationActionsDemoImpl())
 }

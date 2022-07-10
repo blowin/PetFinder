@@ -4,6 +4,7 @@
     <string name="hello">Hello, %1$s.\nNice to meet you.</string>
     <string name="done">Done</string>
     <string name="hint">Your name</string>
+    <string name="pop_up">Back to last screen</string>
 
     <string name="convert">Convert</string>
     <string name="template">%1$s %2$s</string>
@@ -37,4 +38,11 @@
     <string name="forgot_password_text_button">forgot password?</string>
     <string name="or_text">or</string>
     <string name="show_password">show password</string>
+
+    <!-- registration -->
+    <string name="registration_screen_name">Registration</string>
+
+    <!-- errors -->
+    <string name="empty_field">The text should not be empty</string>
+    <string name="password_length">Min length is %1$n symbols</string>
 </resources>
