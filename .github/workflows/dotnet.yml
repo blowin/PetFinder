@@ -1,0 +1,45 @@
+name: Build
+
+on:
+  push:
+    branches: [ master ]
+    
+    paths-ignore:
+    - 'PetFinder.Android/**'
+    - 'REQUIREMENTS.md'
+    - 'README.md'
+    - 'PetFinder.Backend/README.md'
+    - 'PetFinder.Backend/.dockerignore'
+    
+  pull_request:
+    branches: [ master ]
+    
+    paths-ignore:
+    - 'PetFinder.Android/**'
+    - 'REQUIREMENTS.md'
+    - 'README.md'
+    - 'PetFinder.Backend/README.md'
+    - 'PetFinder.Backend/.dockerignore'
+    
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout
+    - uses: actions/checkout@v2
+      with:
+        submodules: true
+        fetch-depth: 0
+        
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: '6.0.x'
+        
+    - name: Restore dependencies
+      run: dotnet restore "PetFinder.Backend/PetFinder.Backend.Grpc"
+      
+    - name: Build
+      run: dotnet build --no-restore --source "PetFinder.Backend/PetFinder.Backend.Grpc"
