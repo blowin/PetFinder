@@ -40,4 +40,4 @@ jobs:
       run: dotnet build "PetFinder.Backend/PetFinder.Backend.Grpc" --no-restore
 
     - name: Test
-      run: dotnet test "PetFinder.Backend/PetFinder.Tests" --no-build --verbosity normal
+      run: dotnet test "PetFinder.Backend/PetFinder.Tests" --no-restore --verbosity normal
