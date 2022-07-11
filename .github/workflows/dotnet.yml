@@ -1,9 +1,7 @@
-name: Build
+name: ci
 
 on:
-  push:
-    branches: [ master ]
-    
+  push:    
     paths-ignore:
     - 'PetFinder.Android/**'
     - 'REQUIREMENTS.md'
@@ -11,9 +9,7 @@ on:
     - 'PetFinder.Backend/README.md'
     - 'PetFinder.Backend/.dockerignore'
     
-  pull_request:
-    branches: [ master ]
-    
+  pull_request:    
     paths-ignore:
     - 'PetFinder.Android/**'
     - 'REQUIREMENTS.md'
@@ -23,12 +19,11 @@ on:
     
 jobs:
   build:
-
     runs-on: ubuntu-latest
 
     steps:
     - name: Checkout
-    - uses: actions/checkout@v2
+      uses: actions/checkout@v2
       with:
         submodules: true
         fetch-depth: 0
