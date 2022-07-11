@@ -1,0 +1,38 @@
+name: dotnet/code-analysis
+
+on:
+  push:    
+    paths-ignore:
+    - 'PetFinder.Android/**'
+    - 'REQUIREMENTS.md'
+    - 'README.md'
+    - 'PetFinder.Backend/README.md'
+    - 'PetFinder.Backend/.dockerignore'
+    
+  pull_request:    
+    paths-ignore:
+    - 'PetFinder.Android/**'
+    - 'REQUIREMENTS.md'
+    - 'README.md'
+    - 'PetFinder.Backend/README.md'
+    - 'PetFinder.Backend/.dockerignore'
+
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: windows-2019
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Restore dependencies
+        run: dotnet restore "PetFinder.Backend"
+        
+      - name: Run .NET Code Analysis
+        uses: dotnet/code-analysis@main
+        id: code-analysis
+        with:
+          solution: PetFinder.Backend/PetFinder.Backend.sln
+          build-breaking: true
+          all-categories: all
