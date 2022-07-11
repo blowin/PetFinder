@@ -34,7 +34,7 @@ jobs:
         dotnet-version: '6.0.x'
         
     - name: Restore dependencies
-      run: dotnet restore "PetFinder.Backend/PetFinder.Backend.Grpc"
+      run: dotnet restore "PetFinder.Backend"
       
     - name: Build
       run: dotnet build "PetFinder.Backend/PetFinder.Backend.Grpc" --no-restore
