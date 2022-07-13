@@ -99,4 +99,7 @@ dependencies {
 
     // --- debug ---
     debugImplementation(Config.Compose.Tooling)
+
+    // --- images ---
+    implementation(Config.Images.Landscapist_Glide)
 }

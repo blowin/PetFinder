@@ -22,23 +22,6 @@ class MainActivity : ComponentActivity() {
                     navController = navController,
                     navigationActions = navigationActions
                 )
-//                Box(
-//                    modifier = Modifier.fillMaxSize(),
-//                    contentAlignment = Alignment.Center
-//                ) {
-//                    val valueState = remember { mutableStateOf("") }
-//                    ValidatedOutlinedTextField(
-//                        value = valueState.value,
-//                        label = "Valid",
-//                        validators = {
-//                            addValidator(TextValidator.EmptyText)
-//                            addValidator(TextValidator.DefPassword)
-//                        },
-//                        onValueChange = {
-//                            valueState.value = it
-//                        }
-//                    )
-//                }
             }
         }
     }

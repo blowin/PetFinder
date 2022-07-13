@@ -73,6 +73,14 @@ object Config {
             const val Config = "21.0.2"
         }
     }
+
+    object Images {
+        const val Landscapist_Glide = "com.github.skydoves:landscapist-glide:${Version.Landscapist_Glide}"
+
+        object Version {
+            const val Landscapist_Glide = "1.5.3"
+        }
+    }
 }
 
 object ConfigVers {
