@@ -3,6 +3,7 @@ using Grpc.Core;
 using PetFinder.Backend.Domain.Core;
 using PetFinder.Backend.Domain.Pets;
 using PetFinder.Backend.Grpc;
+using PetFinder.Backend.Grpc.Extension;
 
 namespace PetFinder.Backend.Grpc.Services;
 
@@ -27,7 +28,7 @@ public class GreeterService : Greeter.GreeterBase
     
     public override async Task GetPets(PageRequest request, IServerStreamWriter<PetResponse> responseStream, ServerCallContext context)
     {
-        var pets = _petRepository.GetPage(request.Page, request.PageSize)
+        var pets = _petRepository.GetPage(request.ToCorePageRequest())
             .Select(pet => new PetResponse
             {
                 Id = new UUID

@@ -4,7 +4,7 @@ using PetFinder.Backend.Domain.Core;
 namespace PetFinder.Infrastructure;
 
 public abstract class FakeRepository<T> : IRepository<T>
-    where T : Entity
+    where T : IEntity
 {
     private readonly Lazy<Dictionary<Guid, T>> _items;
 
@@ -32,7 +32,7 @@ public abstract class FakeRepository<T> : IRepository<T>
 
     public T GetById(Guid id) => Items[id];
 
-    public Page<T> GetPage(int pageNumber, int pageSize = Constants.PageSize) => Items.Values.ToPage(pageNumber, pageSize);
+    public Page<T> GetPage(PageRequest pageRequest) => Items.Values.ToPage(pageRequest);
 
     protected abstract IEnumerable<T> GenerateItems();
 }

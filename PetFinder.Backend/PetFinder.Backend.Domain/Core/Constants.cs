@@ -2,5 +2,5 @@
 
 public class Constants
 {
-    public const int PageSize = 10;
+    public const int MaxPageSize = 20;
 }
