@@ -75,8 +75,10 @@ enum PetType {
 }
 
 message NullableBool {
-	bool NullValue = 1;
-	bool Value = 2;
+	oneof kind {
+		google.protobuf.NullValue null = 1;
+		bool data = 2;
+	}
 }
 
 message NullableString {

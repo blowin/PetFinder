@@ -38,11 +38,7 @@ public class GreeterService : Greeter.GreeterBase
                 Type = (PetType)pet.Type,
                 Name = pet.Name,
                 Age = pet.Age,
-                Sterilized = new NullableBool
-                {
-                    NullValue = pet.Sterilized == null,
-                    Value = pet.Sterilized ?? false
-                },
+                Sterilized = pet.Sterilized.ToNullableBool(),
                 Diseases =
                 {
                     pet.Diseases ?? Enumerable.Empty<string>()
