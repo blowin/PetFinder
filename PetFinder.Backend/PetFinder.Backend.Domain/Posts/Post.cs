@@ -1,4 +1,6 @@
-﻿namespace PetFinder.Backend.Domain.Posts;
+﻿using PetFinder.Backend.Domain.Core;
+
+namespace PetFinder.Backend.Domain.Posts;
 
 public abstract class Post : Entity
 {

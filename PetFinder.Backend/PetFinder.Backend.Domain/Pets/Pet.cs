@@ -1,4 +1,6 @@
-﻿namespace PetFinder.Backend.Domain.Pets;
+﻿using PetFinder.Backend.Domain.Core;
+
+namespace PetFinder.Backend.Domain.Pets;
 
 public class Pet : Entity
 {
