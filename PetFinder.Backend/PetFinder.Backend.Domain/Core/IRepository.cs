@@ -3,7 +3,7 @@
 public interface IReadRepository<T>
     where T : IEntity
 {
-    T GetById(Guid id);
+    T? GetById(Guid id);
 
     Page<T> GetPage(PageRequest pageRequest);
 }

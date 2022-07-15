@@ -30,7 +30,7 @@ public abstract class FakeRepository<T> : IRepository<T>
         Items.Remove(entity.Id);
     }
 
-    public T GetById(Guid id) => Items[id];
+    public T? GetById(Guid id) => Items.TryGetValue(id, out var res) ? res : default;
 
     public Page<T> GetPage(PageRequest pageRequest) => Items.Values.ToPage(pageRequest);
 
