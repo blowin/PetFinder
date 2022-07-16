@@ -31,47 +31,18 @@ public class GreeterService : Greeter.GreeterBase
     
     public override async Task GetPets(PageRequest request, IServerStreamWriter<PetResponse> responseStream, ServerCallContext context)
     {
-        var pets = _petRepository.GetPage(request.ToCorePageRequest())
-            .Select(pet => new PetResponse
-            {
-                Id = pet.Id.ToUUID(),
-                Type = (PetType)pet.Type,
-                Name = pet.Name,
-                Age = pet.Age,
-                Sterilized = pet.Sterilized.ToNullableBool(),
-                Diseases =
-                {
-                    pet.Diseases ?? Enumerable.Empty<string>()
-                },
-                Vaccination =
-                {
-                    pet.Vaccination ?? Enumerable.Empty<string>()
-                }
-            });
+        var pets = _petRepository
+            .GetPage(request.ToCorePageRequest())
+            .Select(pet => pet.ToPetResponse());
 
         foreach (var pet in pets)
-        {
             await responseStream.WriteAsync(pet);
-        }
     }
 
     public override Task<SearchPostDetail?> GetSearchPost(GetByIdRequest request, ServerCallContext context)
     {
         var id = request.Id.ToGuid();
-        var postDetail = _searchPostRepository.GetById(id);
-        if(postDetail == null)
-            return Task.FromResult<SearchPostDetail?>(null);
-
-        var result = new SearchPostDetail
-        {
-            Id = postDetail.Id.ToUUID(),
-            Title = postDetail.Title,
-            Description = postDetail.Description.ToNullableString(),
-            Photos =
-            {
-                postDetail.Photos?.Select(i => i.ToPhoto()) ?? Enumerable.Empty<Photo>()
-            }
-        };
-        return Task.FromResult<SearchPostDetail?>(result);
+        var postDetail = _searchPostRepository.GetById(id)?.ToSearchPostDetail();
+        return Task.FromResult<SearchPostDetail?>(postDetail);
     }
 }
