@@ -13,7 +13,6 @@ public class FakePetRepository : FakeRepository<Pet>
 
             .RuleFor(e => e.Id, f => f.Random.Guid())
             .RuleFor(e => e.Type, f => f.PickRandom<PetType>())
-            .RuleFor(e => e.MainPhoto, Photo.Empty)
             .RuleFor(e => e.Name, f => f.Person.FirstName.OrNull(f))
             .RuleFor(e => e.Age, f => f.Random.Byte(1, 15).OrNull(f))
             .RuleFor(e => e.Sterilized, f => f.Random.Bool().OrNull(f))

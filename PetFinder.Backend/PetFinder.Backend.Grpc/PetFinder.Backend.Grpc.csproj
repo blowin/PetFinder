@@ -10,7 +10,7 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <Protobuf Include="Protos\greet.proto" GrpcServices="Server" />
+        <Protobuf Include="Protos\pet_service.proto" GrpcServices="Server" />
     </ItemGroup>
 
     <ItemGroup>
@@ -24,6 +24,7 @@
     </ItemGroup>
 
     <ItemGroup>
+      <Folder Include="Extension\" />
       <Folder Include="Validators\" />
     </ItemGroup>
 

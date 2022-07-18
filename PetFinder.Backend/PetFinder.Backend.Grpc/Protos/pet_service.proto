@@ -1,0 +1,81 @@
+syntax = "proto3";
+
+option csharp_namespace = "PetFinder.Backend.Grpc";
+
+import "google/protobuf/wrappers.proto";
+import "google/protobuf/struct.proto";
+
+// The greeting service definition.
+service PetServiceGrpc {
+  rpc GetPets(PageRequest) returns (stream PetResponse);
+
+  rpc GetSearchPost(GetByIdRequest) returns (SearchPostDetail);
+  rpc GetSearchPosts(GetSearchPostsRequest) returns (stream SearchPostDetail);
+}
+
+message GetSearchPostsRequest{
+	PageRequest PageRequest = 1;
+	ImageSize ImageSize = 2;
+}
+
+message PageRequest {
+	int32 page = 1;
+	int32 pageSize = 2;
+}
+
+enum ImageSize {
+	Xs = 0;
+	Sm = 1;
+	Md = 2;
+	Lg = 3;
+}
+
+message Photo {
+	UUID Id = 1;
+	bytes Content = 2;
+	ImageSize Size = 3;
+}
+
+message SearchPostDetail {
+	UUID Id = 1;
+	string Title = 2;
+	NullableString Description = 3;
+	repeated Photo Photos = 4;
+}
+
+message PetResponse {
+	UUID Id = 1;
+	PetType Type = 2;
+	google.protobuf.StringValue Name = 3;
+	google.protobuf.UInt32Value Age = 4;
+	NullableBool Sterilized = 5;
+	repeated string Vaccination = 6;
+	repeated string Diseases = 7;
+}
+
+message GetByIdRequest {
+	UUID Id = 1;
+}
+
+message UUID {
+	string value = 1;
+}
+
+enum PetType {
+	Cat = 0;
+	Dog = 1;
+}
+
+message NullableBool {
+	oneof kind {
+		google.protobuf.NullValue null = 1;
+		bool data = 2;
+	}
+}
+
+message NullableString {
+	oneof kind {
+		google.protobuf.NullValue null = 1;
+		string data = 2;
+	}
+}

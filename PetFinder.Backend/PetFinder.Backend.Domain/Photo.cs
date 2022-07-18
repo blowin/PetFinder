@@ -1,4 +1,6 @@
-﻿namespace PetFinder.Backend.Domain;
+﻿using PetFinder.Backend.Domain.Core;
+
+namespace PetFinder.Backend.Domain;
 
 public class Photo : Entity
 {
@@ -6,12 +8,15 @@ public class Photo : Entity
     
     public byte[] Content { get; private set; }
 
-    private Photo() : this(Array.Empty<byte>())
+    public ImageSize Size { get; private set; }
+
+    private Photo() : this(Array.Empty<byte>(), ImageSize.Xs)
     {
     }
     
-    public Photo(byte[] content)
+    public Photo(byte[] content, ImageSize size)
     {
         Content = content;
+        Size = size;
     }
 }

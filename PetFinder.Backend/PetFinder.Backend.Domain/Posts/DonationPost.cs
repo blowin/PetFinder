@@ -2,7 +2,7 @@
 
 namespace PetFinder.Backend.Domain.Posts;
 
-public class DonationPost : Entity
+public class DonationPost : Post
 {
     public string Name { get; private set; }
     public string Description { get; private set; }
@@ -13,11 +13,12 @@ public class DonationPost : Entity
     public DateTime? CloseDate { get; set; }
 
     private DonationPost()
-        : this(string.Empty, string.Empty, Guid.Empty, new Pet(PetType.Cat, Photo.Empty))
+        : this(string.Empty, string.Empty, Guid.Empty, new Pet(PetType.Cat), new List<Photo>())
     {
     }
     
-    public DonationPost(string name, string description, Guid createdUserId, Pet pet)
+    public DonationPost(string name, string description, Guid createdUserId, Pet pet, List<Photo> photos)
+        : base(photos)
     {
         Name = name;
         Description = description;

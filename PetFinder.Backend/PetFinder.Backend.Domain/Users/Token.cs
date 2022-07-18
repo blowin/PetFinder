@@ -1,4 +1,6 @@
-﻿namespace PetFinder.Backend.Domain.Users;
+﻿using PetFinder.Backend.Domain.Core;
+
+namespace PetFinder.Backend.Domain.Users;
 
 public class Token : Entity
 {

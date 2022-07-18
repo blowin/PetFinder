@@ -29,31 +29,31 @@ public sealed class Page<T> : IEnumerable<T>
 
 public static class PageExt
 {
-    public static Page<T> ToPage<T>(this IQueryable<T> self, int pageNumber, int pageSize = Constants.PageSize)
-        where T : Entity
+    public static Page<T> ToPage<T>(this IQueryable<T> self, PageRequest pageRequest)
+        where T : IEntity
     {
-        var result = pageNumber == 1
-            ? self.OrderBy(e => e.Id).Take(pageSize + 1).ToList()
-            : self.OrderBy(e => e.Id).Skip((pageNumber - 1) * pageSize).Take(pageSize + 1).ToList();
+        var result = pageRequest.Page == 1
+            ? self.OrderBy(e => e.Id).Take(pageRequest.PageSize + 1).ToList()
+            : self.OrderBy(e => e.Id).Skip((pageRequest.Page - 1) * pageRequest.PageSize).Take(pageRequest.PageSize + 1).ToList();
 
-        var hasNext = result.Count > pageSize;
+        var hasNext = result.Count > pageRequest.PageSize;
         if(hasNext)
             result.RemoveAt(result.Count - 1);
 
-        return new Page<T>(result, pageSize, hasNext);
+        return new Page<T>(result, pageRequest.PageSize, hasNext);
     }
 
-    public static Page<T> ToPage<T>(this IEnumerable<T> self, int pageNumber, int pageSize = Constants.PageSize)
-        where T : Entity
+    public static Page<T> ToPage<T>(this IEnumerable<T> self, PageRequest pageRequest)
+        where T : IEntity
     {
-        var result = pageNumber == 1
-            ? self.OrderBy(e => e.Id).Take(pageSize + 1).ToList()
-            : self.OrderBy(e => e.Id).Skip((pageNumber - 1) * pageSize).Take(pageSize + 1).ToList();
+        var result = pageRequest.Page == 1
+            ? self.OrderBy(e => e.Id).Take(pageRequest.PageSize + 1).ToList()
+            : self.OrderBy(e => e.Id).Skip((pageRequest.Page - 1) * pageRequest.PageSize).Take(pageRequest.PageSize + 1).ToList();
 
-        var hasNext = result.Count > pageSize;
+        var hasNext = result.Count > pageRequest.PageSize;
         if(hasNext)
             result.RemoveAt(result.Count - 1);
 
-        return new Page<T>(result, pageSize, hasNext);
+        return new Page<T>(result, pageRequest.PageSize, hasNext);
     }
 }
