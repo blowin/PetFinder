@@ -8,25 +8,15 @@ using PetFinder.Backend.Grpc.Extension;
 
 namespace PetFinder.Backend.Grpc.Services;
 
-public class GreeterService : Greeter.GreeterBase
+public class PetService : PetServiceGrpc.PetServiceGrpcBase
 {
-    private readonly ILogger<GreeterService> _logger;
     private readonly IRepository<Pet> _petRepository;
     private readonly ISearchPostRepository _searchPostRepository;
 
-    public GreeterService(ILogger<GreeterService> logger, IRepository<Pet> petRepository, ISearchPostRepository searchPostRepository)
+    public PetService(IRepository<Pet> petRepository, ISearchPostRepository searchPostRepository)
     {
-        _logger = logger;
         _petRepository = petRepository;
         _searchPostRepository = searchPostRepository;
-    }
-
-    public override Task<HelloReply> SayHello(HelloRequest request, ServerCallContext context)
-    {
-        return Task.FromResult(new HelloReply
-        {
-            Message = "Hello " + request.Name
-        });
     }
     
     public override async Task GetPets(PageRequest request, IServerStreamWriter<PetResponse> responseStream, ServerCallContext context)
@@ -44,5 +34,17 @@ public class GreeterService : Greeter.GreeterBase
         var id = request.Id.ToGuid();
         var postDetail = _searchPostRepository.GetById(id)?.ToSearchPostDetail();
         return Task.FromResult<SearchPostDetail?>(postDetail);
+    }
+
+    public override async Task GetSearchPosts(GetSearchPostsRequest request, IServerStreamWriter<SearchPostDetail> responseStream, ServerCallContext context)
+    {
+        var page = request.PageRequest.ToCorePageRequest();
+
+        foreach (var detail in _searchPostRepository.GetPostsPage(page, request.ImageSize.ToCoreImageSize()))
+        {
+            var responseDetail = detail.ToSearchPostDetail();
+            if(responseDetail != null)
+                await responseStream.WriteAsync(responseDetail);
+        }
     }
 }

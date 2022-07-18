@@ -3,6 +3,7 @@ using PetFinder.Backend.DependencyInjection;
 using PetFinder.Backend.Grpc;
 using PetFinder.Backend.Grpc.Services;
 using PetFinder.Backend.Grpc.Validators;
+using PetService = PetFinder.Backend.Grpc.Services.PetService;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -20,7 +21,7 @@ builder.Services.AddGrpcValidation();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
-app.MapGrpcService<GreeterService>();
+app.MapGrpcService<PetService>();
 app.MapGet("/",
     () =>
         "Communication with gRPC endpoints must be made through a gRPC client. To learn how to create a client, visit: https://go.microsoft.com/fwlink/?linkid=2086909");

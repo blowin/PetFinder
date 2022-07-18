@@ -57,6 +57,8 @@ public static class MappingExt
         Page = self.Page
     };
 
+    public static Domain.Core.ImageSize ToCoreImageSize(this ImageSize self) => (Domain.Core.ImageSize)self;
+
     public static PetResponse ToPetResponse(this Pet self)
     {
         return new PetResponse

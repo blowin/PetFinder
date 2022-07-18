@@ -2,33 +2,25 @@ syntax = "proto3";
 
 option csharp_namespace = "PetFinder.Backend.Grpc";
 
-package greet;
-
 import "google/protobuf/wrappers.proto";
 import "google/protobuf/struct.proto";
 
 // The greeting service definition.
-service Greeter {
-  // Sends a greeting
-  rpc SayHello (HelloRequest) returns (HelloReply);
-  rpc GetPets(PageRequest) returns (stream .greet.PetResponse);
+service PetServiceGrpc {
+  rpc GetPets(PageRequest) returns (stream PetResponse);
 
-  rpc GetSearchPost(GetByIdRequest) returns (.greet.SearchPostDetail);
+  rpc GetSearchPost(GetByIdRequest) returns (SearchPostDetail);
+  rpc GetSearchPosts(GetSearchPostsRequest) returns (stream SearchPostDetail);
+}
+
+message GetSearchPostsRequest{
+	PageRequest PageRequest = 1;
+	ImageSize ImageSize = 2;
 }
 
 message PageRequest {
 	int32 page = 1;
 	int32 pageSize = 2;
-}
-
-// The request message containing the user's name.
-message HelloRequest {
-  string name = 1;
-}
-
-// The response message containing the greetings.
-message HelloReply {
-  string message = 1;
 }
 
 enum ImageSize {
@@ -62,7 +54,7 @@ message PetResponse {
 }
 
 message GetByIdRequest {
-	.greet.UUID Id = 1;
+	UUID Id = 1;
 }
 
 message UUID {
