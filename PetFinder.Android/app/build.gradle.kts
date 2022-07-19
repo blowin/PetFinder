@@ -71,12 +71,16 @@ android {
 protobuf {
     protoc { artifact = "com.google.protobuf:protoc:3.21.2" }
     plugins {
+        id("java") { artifact = "io.grpc:protoc-gen-grpc-java:1.47.0" }
         id("grpc") { artifact = "io.grpc:protoc-gen-grpc-java:1.47.0" }
         id("grpckt") { artifact = "io.grpc:protoc-gen-grpc-kotlin:1.3.0:jdk8@jar" }
     }
     generateProtoTasks {
         all().forEach {
             it.plugins {
+                id("java") {
+                    option("lite")
+                }
                 id("grpc") {
                     option("lite")
                 }
@@ -130,9 +134,11 @@ dependencies {
     // --- images ---
     implementation(Config.Images.Landscapist_Glide)
 
-    implementation("io.grpc:grpc-kotlin-stub:1.3.0")
+    implementation("io.grpc:grpc-stub:1.46.0")
     implementation("io.grpc:grpc-protobuf-lite:1.47.0")
+    implementation("io.grpc:grpc-kotlin-stub:1.3.0")
+    implementation("com.google.protobuf:protobuf-kotlin-lite:3.21.2")
+
     implementation("io.grpc:grpc-okhttp:1.47.0")
-    implementation("com.google.protobuf:protobuf-kotlin:3.21.2")
     implementation("javax.annotation:javax.annotation-api:1.3.2")
 }

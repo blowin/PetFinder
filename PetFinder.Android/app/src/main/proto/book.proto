@@ -1,10 +1,9 @@
 syntax = "proto3";
 
-package book;
-
 option java_package = "com.lefarmico.proto";
-option java_generic_services = true;
 option java_outer_classname = "BookProto";
+
+package book;
 
 message Book {
 	int64 isbn = 1;
