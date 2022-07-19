@@ -1,4 +1,7 @@
 buildscript {
+    dependencies {
+        classpath("com.google.protobuf:protobuf-gradle-plugin:0.8.18")
+    }
 } // Top-level build file where you can add configuration options common to all sub-projects/modules.
 plugins {
     id("com.android.application") version "7.2.1" apply false
