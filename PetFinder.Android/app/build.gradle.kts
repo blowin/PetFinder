@@ -1,3 +1,4 @@
+import com.google.protobuf.gradle.*
 import com.lefarmico.buildsrc.*
 
 plugins {
@@ -6,6 +7,7 @@ plugins {
     id("org.jetbrains.kotlin.plugin.parcelize")
     id("org.jetbrains.kotlin.kapt")
     id("dagger.hilt.android.plugin")
+    id("com.google.protobuf")
 }
 android {
     compileSdk = ConfigVers.targetSdk
@@ -66,6 +68,35 @@ android {
     }
 }
 
+protobuf {
+    protoc { artifact = "com.google.protobuf:protoc:3.21.2" }
+    plugins {
+        id("java") { artifact = "io.grpc:protoc-gen-grpc-java:1.47.0" }
+        id("grpc") { artifact = "io.grpc:protoc-gen-grpc-java:1.47.0" }
+        id("grpckt") { artifact = "io.grpc:protoc-gen-grpc-kotlin:1.3.0:jdk8@jar" }
+    }
+    generateProtoTasks {
+        all().forEach {
+            it.plugins {
+                id("java") {
+                    option("lite")
+                }
+                id("grpc") {
+                    option("lite")
+                }
+                id("grpckt") {
+                    option("lite")
+                }
+            }
+            it.builtins {
+                id("kotlin") {
+                    option("lite")
+                }
+            }
+        }
+    }
+}
+
 dependencies {
     implementation(project(mapOf("path" to ":core")))
 
@@ -102,4 +133,12 @@ dependencies {
 
     // --- images ---
     implementation(Config.Images.Landscapist_Glide)
+
+    implementation("io.grpc:grpc-stub:1.46.0")
+    implementation("io.grpc:grpc-protobuf-lite:1.47.0")
+    implementation("io.grpc:grpc-kotlin-stub:1.3.0")
+    implementation("com.google.protobuf:protobuf-kotlin-lite:3.21.2")
+
+    implementation("io.grpc:grpc-okhttp:1.47.0")
+    implementation("javax.annotation:javax.annotation-api:1.3.2")
 }
