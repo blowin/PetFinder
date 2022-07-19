@@ -5,8 +5,6 @@ import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.AddCircle
 import androidx.compose.material.ripple.rememberRipple
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -17,7 +15,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.unit.dp
 import com.lefarmico.petfinder.ui.view.FadedText
-import com.lefarmico.petfinder.utils.imageVector.RemoveCircle
+import com.lefarmico.petfinder.utils.imageVector.AddRoundedSquare
+import com.lefarmico.petfinder.utils.imageVector.RemoveRoundedSquare
 
 // TODO : Change it top more material
 @Composable
@@ -44,7 +43,7 @@ fun RatingWidget(
                         bounded = false
                     )
                 ),
-            imageVector = Icons.Filled.AddCircle,
+            imageVector = AddRoundedSquare,
             contentDescription = "Increase rating"
         )
         FadedText(
@@ -64,7 +63,7 @@ fun RatingWidget(
                         bounded = false
                     )
                 ),
-            imageVector = Icons.Filled.RemoveCircle,
+            imageVector = RemoveRoundedSquare,
             contentDescription = "Decrease rating"
         )
     }
