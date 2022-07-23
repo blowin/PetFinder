@@ -1,7 +1,5 @@
 package com.lefarmico.petfinder.presentation.screen.home.view
 
-import android.os.Build
-import androidx.annotation.RequiresApi
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.*
@@ -21,15 +19,16 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
+import com.lefarmico.petfinder.presentation.screen.home.model.SearchPostViewData
 import com.lefarmico.petfinder.ui.theme.petfinder.PF_Card
 import com.lefarmico.petfinder.ui.theme.petfinder.PF_OutlinedCard
 import com.lefarmico.petfinder.ui.theme.petfinder.widget.RatingWidget
 import com.lefarmico.petfinder.ui.theme.petfinder.widget.UserWidget
 
 @Composable
-fun PostWidgetWithoutImage(
+fun SearchPostWidgetWithoutImage(
     modifier: Modifier = Modifier,
-    postWidgetData: PostWidgetData,
+    searchPostViewData: SearchPostViewData,
     enabled: Boolean = true,
     interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
     onCardClick: () -> Unit = {},
@@ -41,6 +40,7 @@ fun PostWidgetWithoutImage(
     PF_Card(
         modifier = modifier
             .fillMaxWidth()
+            .wrapContentHeight()
             .padding(8.dp)
             .clickable(
                 onClick = onCardClick,
@@ -66,8 +66,8 @@ fun PostWidgetWithoutImage(
                         top.linkTo(settingsButton.top)
                         bottom.linkTo(settingsButton.bottom)
                     },
-                userName = postWidgetData.userName,
-                userImageUrl = postWidgetData.userImageUrl,
+                userName = searchPostViewData.author,
+                userImageUrl = searchPostViewData.authorImageContent as String,
                 onClick = onUserClick
             )
 
@@ -90,7 +90,7 @@ fun PostWidgetWithoutImage(
                         top.linkTo(settingsButton.bottom)
                         start.linkTo(descriptionText.start)
                     },
-                text = postWidgetData.header,
+                text = searchPostViewData.header,
                 fontWeight = FontWeight.Bold,
                 style = MaterialTheme.typography.headlineSmall,
                 maxLines = 2
@@ -103,7 +103,7 @@ fun PostWidgetWithoutImage(
                         end.linkTo(parent.end)
                     }
                     .padding(horizontal = 8.dp),
-                text = postWidgetData.description,
+                text = searchPostViewData.description,
                 maxLines = 2,
                 style = MaterialTheme.typography.bodyMedium
             )
@@ -120,7 +120,7 @@ fun PostWidgetWithoutImage(
                     modifier = Modifier
                         .padding(4.dp)
                         .padding(horizontal = 4.dp),
-                    text = postWidgetData.afterReleaseTime,
+                    text = searchPostViewData.publishedInfo,
                     style = MaterialTheme.typography.labelMedium
                 )
             }
@@ -132,7 +132,7 @@ fun PostWidgetWithoutImage(
                         end.linkTo(descriptionText.end)
                         bottom.linkTo(parent.bottom)
                     },
-                rating = postWidgetData.rating,
+                rating = searchPostViewData.rating,
                 onDecreaseClick = onDecreaseRatingClick,
                 onIncreaseClick = onIncreaseRatingClick
             )
@@ -140,25 +140,27 @@ fun PostWidgetWithoutImage(
     }
 }
 
-@RequiresApi(Build.VERSION_CODES.O)
 @Preview(
     showBackground = true,
     group = "PostWidgetWithoutImage"
 )
 @Composable
 fun PostWidgetWithoutImage_Demo() {
-    val data = PostWidgetData(
-        userName = "Artsiom Zharnikovich",
-        userImageUrl = "https://www.india.com/wp-content/uploads/2017/11/12-3.jpg",
+    val data = SearchPostViewData(
+        author = "Artsiom Zharnikovich",
+        authorImageContent = "https://www.india.com/wp-content/uploads/2017/11/12-3.jpg",
         header = "How to love dogs",
         description = "Few useless advises which are never help you to love someone.",
-        afterReleaseTime = "1 hour ago"
+        publishedInfo = "1 hour ago",
+        postId = "1",
+        imageContent = null,
+        rating = 5,
     )
     Column(
         modifier = Modifier
             .fillMaxWidth(),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        PostWidgetWithoutImage(postWidgetData = data)
+        SearchPostWidgetWithoutImage(searchPostViewData = data)
     }
 }

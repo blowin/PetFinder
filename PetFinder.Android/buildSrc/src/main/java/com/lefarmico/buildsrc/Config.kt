@@ -102,7 +102,7 @@ object ConfigVers {
     const val espresso = "3.4.0"
 
     // --- androidSdk ---
-    const val minSdk = 24
+    const val minSdk = 26
     const val targetSdk = 32
     const val compileSdk = 32
 
