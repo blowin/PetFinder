@@ -134,11 +134,15 @@ dependencies {
     // --- images ---
     implementation(Config.Images.Landscapist_Glide)
 
+    // --- grpc ---
     implementation("io.grpc:grpc-stub:1.46.0")
     implementation("io.grpc:grpc-protobuf-lite:1.47.0")
     implementation("io.grpc:grpc-kotlin-stub:1.3.0")
     implementation("com.google.protobuf:protobuf-kotlin-lite:3.21.2")
-
     implementation("io.grpc:grpc-okhttp:1.47.0")
+
+    // --- OkHttp ---
+
+    // --- javax ---
     implementation("javax.annotation:javax.annotation-api:1.3.2")
 }
