@@ -5,7 +5,7 @@ import com.lefarmico.petfinder.domain.repository.entity.ImageSizes
 import com.lefarmico.petfinder.domain.repository.entity.SearchPostData
 import java.time.LocalDateTime
 
-class TestSearchPostDataSource {
+class TestDataSource {
 
     private val searchPostDataTest = SearchPostData(
         postId = "1",

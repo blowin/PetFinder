@@ -3,6 +3,7 @@ package com.lefarmico.petfinder.di
 import com.lefarmico.core.base.app.ApplicationConfigInitializer
 import com.lefarmico.core.base.app.config.TimberConfig
 import com.lefarmico.petfinder.App
+import com.lefarmico.petfinder.testData.TestDataSource
 import com.lefarmico.petfinder.utils.AppConfig
 import dagger.Module
 import dagger.Provides
@@ -43,4 +44,8 @@ class AppModule {
     ): ApplicationConfigInitializer {
         return ApplicationConfigInitializer(timberConfig)
     }
+
+    @Provides
+    @Singleton
+    fun provideTestData(): TestDataSource = TestDataSource()
 }
