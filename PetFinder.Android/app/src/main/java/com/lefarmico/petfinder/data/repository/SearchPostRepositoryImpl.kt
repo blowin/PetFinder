@@ -4,7 +4,7 @@ import com.lefarmico.petfinder.data.mapper.toData
 import com.lefarmico.petfinder.domain.repository.SearchPostRepository
 import com.lefarmico.petfinder.domain.repository.entity.PostId
 import com.lefarmico.petfinder.domain.repository.entity.SearchPostData
-import com.lefarmico.petfinder.testData.TestSearchPostDataSource
+import com.lefarmico.petfinder.testData.TestDataSource
 import com.lefarmico.proto.PetServiceGrpcGrpc
 import com.lefarmico.proto.PetServiceProto
 import kotlinx.coroutines.flow.Flow
@@ -18,7 +18,7 @@ class SearchPostRepositoryImpl @Inject constructor(
 //        val searchPost = blockingStub.getSearchPost(
 //            PetServiceProto.GetByIdRequest.getDefaultInstance()
 //        )
-        val searchPostw = TestSearchPostDataSource().run { getSearchPost() }
+        val searchPostw = TestDataSource().run { getSearchPost() }
         this.emit(searchPostw)
     }
 
