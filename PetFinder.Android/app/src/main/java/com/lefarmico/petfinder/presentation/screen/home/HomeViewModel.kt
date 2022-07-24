@@ -27,7 +27,7 @@ class HomeViewModel @Inject constructor(
     override val _state: MutableStateFlow<HomeState> = MutableStateFlow(HomeState())
     override val state: StateFlow<HomeState> = _state.asStateFlow()
 
-    fun getSearchPostList() {
+    private fun getSearchPostList() {
         viewModelScope.launch {
             val searchPostList = withContext(Dispatchers.IO) {
                 searchPostRepository.getSearchPostRequest(1, 1)
