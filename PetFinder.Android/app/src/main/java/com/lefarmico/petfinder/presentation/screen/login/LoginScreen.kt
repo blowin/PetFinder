@@ -155,9 +155,7 @@ fun LoginScreen(
                     end.linkTo(usernameField.end)
                 },
             onForgotPasswordClick = {
-                viewModel.onTriggerEvent(
-                    LoginEvent.ForgotPassPressed
-                )
+                navigationActions.navigateToHome()
             },
             onSignUpClick = {
                 navigationActions.navigateToRegistration()

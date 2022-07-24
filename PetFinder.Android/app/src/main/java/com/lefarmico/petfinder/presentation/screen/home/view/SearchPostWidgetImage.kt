@@ -20,6 +20,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import com.lefarmico.petfinder.R
+import com.lefarmico.petfinder.presentation.screen.home.model.SearchPostViewData
 import com.lefarmico.petfinder.ui.theme.petfinder.PF_Card
 import com.lefarmico.petfinder.ui.theme.petfinder.PF_OutlinedCard
 import com.lefarmico.petfinder.ui.theme.petfinder.widget.RatingWidget
@@ -27,20 +28,10 @@ import com.lefarmico.petfinder.ui.theme.petfinder.widget.UserWidget
 import com.skydoves.landscapist.ShimmerParams
 import com.skydoves.landscapist.glide.GlideImage
 
-data class PostWidgetData(
-    val userName: String,
-    val userImageUrl: String? = null,
-    val header: String,
-    val postPhoto: String? = null,
-    val description: String,
-    val rating: Int = 0,
-    val afterReleaseTime: String = "1 hour ago"
-)
-
 @Composable
-fun PostWidget(
+fun SearchPostWidget(
     modifier: Modifier = Modifier,
-    postWidgetData: PostWidgetData,
+    searchPostViewData: SearchPostViewData,
     enabled: Boolean = true,
     interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
     onCardClick: () -> Unit = {},
@@ -49,10 +40,10 @@ fun PostWidget(
     onIncreaseRatingClick: () -> Unit = {},
     onDecreaseRatingClick: () -> Unit = {}
 ) {
-    when (postWidgetData.postPhoto) {
-        null -> PostWidgetWithoutImage(
+    when (searchPostViewData.imageContent) {
+        null -> SearchPostWidgetWithoutImage(
             modifier = modifier,
-            postWidgetData = postWidgetData,
+            searchPostViewData = searchPostViewData,
             enabled = enabled,
             interactionSource = interactionSource,
             onCardClick = onCardClick,
@@ -61,9 +52,9 @@ fun PostWidget(
             onIncreaseRatingClick = onIncreaseRatingClick,
             onDecreaseRatingClick = onDecreaseRatingClick
         )
-        else -> PostWidgetImage(
+        else -> SearchPostWidgetImage(
             modifier = modifier,
-            postWidgetData = postWidgetData,
+            searchPostViewData = searchPostViewData,
             enabled = enabled,
             interactionSource = interactionSource,
             onCardClick = onCardClick,
@@ -76,9 +67,9 @@ fun PostWidget(
 }
 
 @Composable
-fun PostWidgetImage(
+fun SearchPostWidgetImage(
     modifier: Modifier = Modifier,
-    postWidgetData: PostWidgetData,
+    searchPostViewData: SearchPostViewData,
     enabled: Boolean = true,
     interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
     onCardClick: () -> Unit = {},
@@ -90,6 +81,7 @@ fun PostWidgetImage(
     PF_Card(
         modifier = modifier
             .fillMaxWidth()
+            .wrapContentHeight()
             .padding(8.dp)
             .clickable(
                 onClick = onCardClick,
@@ -115,8 +107,8 @@ fun PostWidgetImage(
                         top.linkTo(settingsButton.top)
                         bottom.linkTo(settingsButton.bottom)
                     },
-                userName = postWidgetData.userName,
-                userImageUrl = postWidgetData.userImageUrl,
+                userName = searchPostViewData.author,
+                userImageUrl = searchPostViewData.authorImageContent as String,
                 onClick = onUserClick
             )
 
@@ -139,7 +131,7 @@ fun PostWidgetImage(
                         top.linkTo(settingsButton.bottom)
                         start.linkTo(descriptionText.start)
                     },
-                text = postWidgetData.header,
+                text = searchPostViewData.header,
                 fontWeight = FontWeight.Bold,
                 style = MaterialTheme.typography.headlineSmall,
                 maxLines = 2
@@ -154,7 +146,7 @@ fun PostWidgetImage(
                     .padding(bottom = 8.dp)
                     .fillMaxWidth()
                     .height(200.dp),
-                imageModel = postWidgetData.postPhoto,
+                imageModel = searchPostViewData.imageContent,
                 shimmerParams = ShimmerParams(
                     baseColor = MaterialTheme.colorScheme.background,
                     highlightColor = Color.DarkGray,
@@ -173,7 +165,7 @@ fun PostWidgetImage(
                         end.linkTo(parent.end)
                     }
                     .padding(horizontal = 8.dp),
-                text = postWidgetData.description,
+                text = searchPostViewData.description,
                 maxLines = 2,
                 style = MaterialTheme.typography.bodyMedium
             )
@@ -190,7 +182,7 @@ fun PostWidgetImage(
                     modifier = Modifier
                         .padding(4.dp)
                         .padding(horizontal = 4.dp),
-                    text = postWidgetData.afterReleaseTime,
+                    text = searchPostViewData.publishedInfo,
                     style = MaterialTheme.typography.labelMedium
                 )
             }
@@ -202,7 +194,7 @@ fun PostWidgetImage(
                         end.linkTo(descriptionText.end)
                         bottom.linkTo(parent.bottom)
                     },
-                rating = postWidgetData.rating,
+                rating = searchPostViewData.rating,
                 onDecreaseClick = onDecreaseRatingClick,
                 onIncreaseClick = onIncreaseRatingClick
             )
@@ -217,20 +209,22 @@ fun PostWidgetImage(
 )
 @Composable
 fun PostWidget_Demo() {
-    val data = PostWidgetData(
-        userName = "Artsiom Zharnikovich",
-        userImageUrl = "https://www.india.com/wp-content/uploads/2017/11/12-3.jpg",
+    val data = SearchPostViewData(
+        author = "Artsiom Zharnikovich",
+        authorImageContent = "https://www.india.com/wp-content/uploads/2017/11/12-3.jpg",
         header = "How to love dogs",
-        postPhoto = "https://images.hellogiggles.com/uploads/2015/11/03/dog.jpg",
+        imageContent = "https://images.hellogiggles.com/uploads/2015/11/03/dog.jpg",
         description = "Few useless advises which are never help you to love someone.",
-        afterReleaseTime = "1 hour ago"
+        publishedInfo = "1 hour ago",
+        postId = "",
+        rating = 5,
     )
     Column(
         modifier = Modifier
             .fillMaxWidth(),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        PostWidget(postWidgetData = data)
-        PostWidget(postWidgetData = data.copy(postPhoto = null))
+        SearchPostWidget(searchPostViewData = data)
+        SearchPostWidget(searchPostViewData = data.copy(imageContent = null))
     }
 }

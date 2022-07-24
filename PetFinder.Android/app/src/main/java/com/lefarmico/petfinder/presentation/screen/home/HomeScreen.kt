@@ -1,13 +1,15 @@
 package com.lefarmico.petfinder.presentation.screen.home
 
-import androidx.compose.foundation.layout.*
-import androidx.compose.material3.Text
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.lefarmico.petfinder.presentation.navigation.NavigationActions
+import com.lefarmico.petfinder.presentation.screen.home.model.HomeEvent
+import com.lefarmico.petfinder.presentation.screen.home.view.SearchPostWidget
 
 @Composable
 fun HomeScreen(
@@ -15,18 +17,17 @@ fun HomeScreen(
     viewModel: HomeViewModel = hiltViewModel(),
     navigationActions: NavigationActions
 ) {
-    Box(
+    viewModel.onTriggerEvent(HomeEvent.GetSearchPosts)
+    val state = viewModel.state.collectAsState()
+
+    LazyColumn(
         modifier = modifier
             .fillMaxSize()
     ) {
-        Column(
-            modifier = Modifier.align(Alignment.Center)
-        ) {
-            Text(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(16.dp),
-                text = "Home"
+        items(state.value.searchPostViewDataList) { searchPost ->
+            SearchPostWidget(
+                modifier = modifier,
+                searchPostViewData = searchPost
             )
         }
     }
