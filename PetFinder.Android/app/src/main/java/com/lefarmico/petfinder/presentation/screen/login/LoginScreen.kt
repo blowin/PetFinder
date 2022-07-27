@@ -155,7 +155,7 @@ fun LoginScreen(
                     end.linkTo(usernameField.end)
                 },
             onForgotPasswordClick = {
-                navigationActions.navigateToHome()
+                navigationActions.navigateToRoot()
             },
             onSignUpClick = {
                 navigationActions.navigateToRegistration()
@@ -187,7 +187,7 @@ fun LoginScreen(
     }
 
     if (isSignedIn) {
-        navigationActions.navigateToHome()
+        navigationActions.navigateToRoot()
     }
     if (isLoading) {
         ForegroundLoading()

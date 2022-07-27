@@ -5,7 +5,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.navigation.compose.rememberNavController
 import com.lefarmico.petfinder.presentation.navigation.NavigationActionsImpl
-import com.lefarmico.petfinder.presentation.navigation.PetFinderNavGraph
+import com.lefarmico.petfinder.presentation.navigation.PetFinderStartNavGraph
 import com.lefarmico.petfinder.ui.theme.PetFinderTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -18,7 +18,7 @@ class MainActivity : ComponentActivity() {
             PetFinderTheme {
                 val navController = rememberNavController()
                 val navigationActions = NavigationActionsImpl(navController)
-                PetFinderNavGraph(
+                PetFinderStartNavGraph(
                     navController = navController,
                     navigationActions = navigationActions
                 )

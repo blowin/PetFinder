@@ -6,13 +6,13 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.lefarmico.petfinder.presentation.screen.home.HomeScreen
 import com.lefarmico.petfinder.presentation.screen.login.LoginScreen
 import com.lefarmico.petfinder.presentation.screen.registration.RegistrationScreen
+import com.lefarmico.petfinder.presentation.screen.root.RootScreen
 import com.lefarmico.petfinder.presentation.screen.splash.SplashScreen
 
 @Composable
-fun PetFinderNavGraph(
+fun PetFinderStartNavGraph(
     modifier: Modifier = Modifier,
     navController: NavHostController = rememberNavController(),
     navigationActions: NavigationActions,
@@ -29,8 +29,8 @@ fun PetFinderNavGraph(
         composable(NavigationDestinations.LOGIN) {
             LoginScreen(navigationActions = navigationActions)
         }
-        composable(NavigationDestinations.HOME) {
-            HomeScreen(navigationActions = navigationActions)
+        composable(NavigationDestinations.ROOT) {
+            RootScreen()
         }
         composable(NavigationDestinations.REGISTRATION) {
             RegistrationScreen(navigationActions = navigationActions)
