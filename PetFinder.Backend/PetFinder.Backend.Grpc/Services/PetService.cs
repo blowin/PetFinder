@@ -1,9 +1,7 @@
-using Google.Protobuf.Collections;
 using Grpc.Core;
 using PetFinder.Backend.Domain.Core;
 using PetFinder.Backend.Domain.Pets;
 using PetFinder.Backend.Domain.Posts;
-using PetFinder.Backend.Grpc;
 using PetFinder.Backend.Grpc.Extension;
 
 namespace PetFinder.Backend.Grpc.Services;

@@ -13,7 +13,7 @@ public class User : Entity
     public Photo? Photo { get; set; }
     public List<SocialNetwork> SocialNetworks { get; private set; } = new List<SocialNetwork>();
 
-    private User() : this(string.Empty, string.Empty)
+    public User() : this(string.Empty, string.Empty)
     {
     }
     
