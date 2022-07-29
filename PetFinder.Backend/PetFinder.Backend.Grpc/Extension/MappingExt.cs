@@ -16,9 +16,19 @@ public static class MappingExt
             Photos =
             {
                 self.Photos?.Select(i => i.ToPhoto()) ?? Enumerable.Empty<Photo>()
-            }
+            },
+            User = self.User.ToUserDetail(),
+            CreateDate = Timestamp.FromDateTime(self.CreateDate)
         };
     }
+
+    public static UserDetail ToUserDetail(this Domain.Posts.UserDetail self) => new UserDetail
+    {
+        Id = self.Id.ToUuid(),
+        Avatar = self.Avatar?.ToNullablePhoto(),
+        Name = self.Name.ToNullableString(),
+        Surname = self.Surname.ToNullableString()
+    };
 
     public static UUID ToUuid(this Guid self) => new UUID
     {
@@ -30,6 +40,11 @@ public static class MappingExt
         return self == null ? 
             new NullableBool { Null = NullValue.NullValue } : 
             new NullableBool { Data = self.Value };
+    }
+
+    public static NullablePhoto ToNullablePhoto(this Domain.Photo? self)
+    {
+        return self == null ? new NullablePhoto { Null = NullValue.NullValue } : new NullablePhoto { Data = self.ToPhoto() };
     }
 
     public static Photo ToPhoto(this Domain.Photo self)

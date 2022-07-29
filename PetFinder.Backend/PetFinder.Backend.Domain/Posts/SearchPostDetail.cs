@@ -8,4 +8,6 @@ public record SearchPostDetail : IEntity
     public string Title { get; set; } = string.Empty;
     public string? Description { get; set; }
     public ICollection<Photo> Photos { get; set; } = Array.Empty<Photo>();
+    public UserDetail User { get; set; } = new UserDetail();
+    public DateTime CreateDate { get; set; }
 }

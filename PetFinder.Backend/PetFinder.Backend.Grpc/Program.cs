@@ -1,7 +1,5 @@
 using Calzolari.Grpc.AspNetCore.Validation;
 using PetFinder.Backend.DependencyInjection;
-using PetFinder.Backend.Grpc;
-using PetFinder.Backend.Grpc.Services;
 using PetFinder.Backend.Grpc.Validators;
 using PetService = PetFinder.Backend.Grpc.Services.PetService;
 

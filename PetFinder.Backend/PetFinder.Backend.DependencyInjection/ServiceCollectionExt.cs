@@ -10,7 +10,9 @@ namespace PetFinder.Backend.DependencyInjection
             self.Scan(s =>
             {
                 s.FromAssemblyOf<FakePetRepository>()
-                    .AddClasses(i => i.AssignableTo(typeof(FakeRepository<>))).AsImplementedInterfaces();
+                    .AddClasses(i => i.AssignableTo(typeof(FakeRepository<>)))
+                        .AsImplementedInterfaces()
+                        .WithSingletonLifetime();
             });
 
             return self;

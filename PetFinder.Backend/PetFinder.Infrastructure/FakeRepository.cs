@@ -1,5 +1,4 @@
-﻿using PetFinder.Backend.Domain;
-using PetFinder.Backend.Domain.Core;
+﻿using PetFinder.Backend.Domain.Core;
 
 namespace PetFinder.Infrastructure;
 
@@ -29,6 +28,8 @@ public abstract class FakeRepository<T> : IRepository<T>
     {
         Items.Remove(entity.Id);
     }
+
+    public IEnumerable<T> AllItems() => Items.Values;
 
     public T? GetById(Guid id) => Items.TryGetValue(id, out var res) ? res : default;
 

@@ -4,6 +4,7 @@ option csharp_namespace = "PetFinder.Backend.Grpc";
 
 import "google/protobuf/wrappers.proto";
 import "google/protobuf/struct.proto";
+import "google/protobuf/timestamp.proto";
 
 // The greeting service definition.
 service PetServiceGrpc {
@@ -41,6 +42,15 @@ message SearchPostDetail {
 	string Title = 2;
 	NullableString Description = 3;
 	repeated Photo Photos = 4;
+	UserDetail User = 5;
+	google.protobuf.Timestamp CreateDate = 6;
+}
+
+message UserDetail {
+	UUID Id = 1;
+	NullablePhoto Avatar = 2;
+	NullableString Name = 3;
+	NullableString Surname = 4;
 }
 
 message PetResponse {
@@ -77,5 +87,12 @@ message NullableString {
 	oneof kind {
 		google.protobuf.NullValue null = 1;
 		string data = 2;
+	}
+}
+
+message NullablePhoto {
+	oneof kind {
+		google.protobuf.NullValue null = 1;
+		Photo data = 2;
 	}
 }
