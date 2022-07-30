@@ -1,45 +1,68 @@
 package com.lefarmico.petfinder.data.repository
 
+import android.util.Log
 import com.lefarmico.petfinder.data.mapper.toData
 import com.lefarmico.petfinder.domain.repository.SearchPostRepository
 import com.lefarmico.petfinder.domain.repository.entity.PostId
 import com.lefarmico.petfinder.domain.repository.entity.SearchPostData
-import com.lefarmico.petfinder.testData.TestDataSource
-import com.lefarmico.proto.PetServiceGrpcGrpc
-import com.lefarmico.proto.PetServiceProto
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
+import com.lefarmico.proto.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.*
 import javax.inject.Inject
 
 class SearchPostRepositoryImpl @Inject constructor(
     private val blockingStub: PetServiceGrpcGrpc.PetServiceGrpcBlockingStub
 ) : SearchPostRepository {
     override suspend fun getPost(postId: PostId): Flow<SearchPostData> = flow {
-//        val searchPost = blockingStub.getSearchPost(
-//            PetServiceProto.GetByIdRequest.getDefaultInstance()
-//        )
-        val searchPostw = TestDataSource().run { getSearchPost() }
-        this.emit(searchPostw)
+        val getByIdRequest = getByIdRequest {
+            id = uUID { value = postId }
+        }
+        val searchPost = blockingStub.getSearchPost(getByIdRequest)
+            .also { Log.d(RESPONSE_TAG, "postResponse: [uuid: ${it.id.value}") }
+            .toData()
+        emit(searchPost)
     }
 
-    override suspend fun getSearchPostRequest(page: Int, pageSize: Int): Flow<List<SearchPostData>> = flow {
-        val searchPostDataList = mutableListOf<SearchPostData>()
-        blockingStub.getSearchPosts(
-            PetServiceProto.GetSearchPostsRequest
-                .getDefaultInstance()
-                .newBuilderForType()
-                .setPageRequest(
-                    PetServiceProto.PageRequest.newBuilder()
-                        .setPage(1)
-                        .setPageSize(10)
-                        .build()
-                ).setImageSize(
-                    PetServiceProto.ImageSize.Md
-                ).build()
-        ).forEachRemaining {
-            val searchPostData = it.toData()
-            searchPostDataList.add(searchPostData)
+    override suspend fun getSearchPostRequest(page: Int, pageSize: Int): Flow<List<SearchPostData>> {
+        val pageRequest = pageRequest {
+            this.page = page
+            this.pageSize = pageSize
+        }.also {
+            Log.d(
+                REQUEST_TAG,
+                "[pageRequest]: " +
+                    "page = ${it.page} " +
+                    "pageSize = ${it.pageSize} "
+            )
         }
-        this.emit(searchPostDataList)
+        val getSearchPostsRequest = getSearchPostsRequest {
+            this.pageRequest = pageRequest
+        }.also {
+            Log.d(
+                REQUEST_TAG,
+                "[postsRequest]: " +
+                    "imageSize: ${it.imageSize} " +
+                    "imageSizeValue: ${it.imageSizeValue} "
+            )
+        }
+        return flow {
+            val searchPostList = blockingStub.getSearchPosts(getSearchPostsRequest)
+                .asSequence()
+                .toList()
+                .map { it.toData() }
+                .also { Log.d(RESPONSE_TAG, "[postsResponse]: $it, size: ${it.size}") }
+
+            emit(searchPostList)
+        }
+            .flowOn(Dispatchers.IO)
+            .catch {
+                Log.e(RESPONSE_TAG, "Response error", it)
+                error(it.printStackTrace())
+            }
+    }
+
+    companion object {
+        const val REQUEST_TAG = "REQUEST_GRPC_SEARCH_POST"
+        const val RESPONSE_TAG = "RESPONSE_GRPC_SEARCH_POST"
     }
 }
