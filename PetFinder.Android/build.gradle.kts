@@ -1,6 +1,6 @@
 buildscript {
     dependencies {
-        classpath("com.google.protobuf:protobuf-gradle-plugin:0.8.18")
+        classpath("com.google.protobuf:protobuf-gradle-plugin:0.8.19")
     }
 } // Top-level build file where you can add configuration options common to all sub-projects/modules.
 plugins {

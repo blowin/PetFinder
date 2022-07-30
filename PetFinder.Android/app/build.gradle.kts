@@ -140,6 +140,9 @@ dependencies {
     implementation("io.grpc:grpc-kotlin-stub:1.3.0")
     implementation("com.google.protobuf:protobuf-kotlin-lite:3.21.2")
     implementation("io.grpc:grpc-okhttp:1.47.0")
+    implementation("io.grpc:grpc-android:1.47.0")
+
+    annotationProcessor("com.github.bumptech.glide:compiler:4.10.0")
 
     // --- OkHttp ---
 

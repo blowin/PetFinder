@@ -1,12 +1,16 @@
 package com.lefarmico.petfinder.di
 
+import android.content.Context
 import com.lefarmico.proto.PetServiceGrpcGrpc
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import io.grpc.ManagedChannel
-import io.grpc.ManagedChannelBuilder
+import io.grpc.android.AndroidChannelBuilder
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.asExecutor
 import javax.inject.Singleton
 
 @Module
@@ -15,9 +19,14 @@ class DomainModule {
 
     @Provides
     @Singleton
-    fun provideManagedChannel(): ManagedChannel =
-        ManagedChannelBuilder
-            .forAddress("localhost", 80)
+    fun provideManagedChannel(
+        @ApplicationContext context: Context
+    ): ManagedChannel =
+        AndroidChannelBuilder
+            .forAddress("10.0.2.2", 80)
+            .context(context)
+            .usePlaintext()
+            .executor(Dispatchers.IO.asExecutor())
             .build()
 
     @Provides
