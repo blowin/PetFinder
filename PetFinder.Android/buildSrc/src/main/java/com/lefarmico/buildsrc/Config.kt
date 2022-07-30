@@ -46,8 +46,8 @@ object Config {
         const val Compose = "androidx.hilt:hilt-navigation-compose:${Versions.Compose}"
 
         object Versions {
-            const val Android = "2.41"
-            const val Compiler = "2.41"
+            const val Android = "2.43"
+            const val Compiler = "2.43"
             const val Compose = "1.0.0"
         }
     }
@@ -88,7 +88,7 @@ object ConfigVers {
     // --- compose ---
     const val compose = "1.2.0-beta01"
     const val constraint_compose = "1.0.1"
-    const val compose_navigation = "2.4.1"
+    const val compose_navigation = "2.5.1"
 
     // --- core ---
     const val core = "1.7.0"

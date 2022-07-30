@@ -102,6 +102,7 @@ fun SearchPostWidgetWithoutImage(
                         start.linkTo(parent.start)
                         end.linkTo(parent.end)
                     }
+                    .fillMaxWidth()
                     .padding(horizontal = 8.dp),
                 text = searchPostViewData.description,
                 maxLines = 2,
@@ -150,7 +151,7 @@ fun PostWidgetWithoutImage_Demo() {
         author = "Artsiom Zharnikovich",
         authorImageContent = "https://www.india.com/wp-content/uploads/2017/11/12-3.jpg",
         header = "How to love dogs",
-        description = "Few useless advises which are never help you to love someone.",
+        description = " ",
         publishedInfo = "1 hour ago",
         postId = "1",
         imageContent = null,

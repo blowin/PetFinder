@@ -48,4 +48,10 @@
     <!-- errors -->
     <string name="empty_field">The text should not be empty</string>
     <string name="password_length">Min length is %1$n symbols</string>
+
+    <!-- screen names -->
+    <string name="home_screen">Home</string>
+    <string name="check_number_screen">Check number</string>
+    <string name="settings_screen">Settings</string>
+    <string name="new_post_screen">New post</string>
 </resources>

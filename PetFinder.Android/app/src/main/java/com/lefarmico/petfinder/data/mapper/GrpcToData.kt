@@ -7,20 +7,22 @@ import com.lefarmico.proto.PetServiceProto
 import java.time.LocalDateTime
 
 fun PetServiceProto.SearchPostDetail.toData(): SearchPostData {
-    val postImage = photosList[0]
+    val postImage = photosList.map {
+        ImageData(
+            postImageId = it.id.value,
+            content = it.content,
+            size = it.size.toData()
+        )
+    }.firstOrNull()
     return SearchPostData(
         postId = id.value,
         header = title,
         description = description.data,
-        image = ImageData(
-            postImageId = postImage.id.value,
-            content = postImage.content,
-            size = postImage.size.toData()
-        ),
+        image = postImage,
         author = "",
         authorImage = ImageData(
             postImageId = "",
-            content = "",
+            content = "https://www.india.com/wp-content/uploads/2017/11/12-3.jpg",
             size = ImageSizes.Unrecognized
         ),
         rating = 0,

@@ -1,6 +1,6 @@
 package com.lefarmico.petfinder.di
 
-import com.lefarmico.petfinder.data.repository.SearchPostRepositoryTestImpl
+import com.lefarmico.petfinder.data.repository.SearchPostRepositoryImpl
 import com.lefarmico.petfinder.domain.repository.SearchPostRepository
 import dagger.Binds
 import dagger.Module
@@ -14,5 +14,5 @@ abstract class RepositoryModule {
 
     @Binds
     @Singleton
-    abstract fun getSearchPostRepo(searchPostRepositoryImpl: SearchPostRepositoryTestImpl): SearchPostRepository
+    abstract fun getSearchPostRepo(searchPostRepositoryImpl: SearchPostRepositoryImpl): SearchPostRepository
 }

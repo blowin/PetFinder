@@ -30,7 +30,7 @@ class HomeViewModel @Inject constructor(
     private fun getSearchPostList() {
         viewModelScope.launch {
             val searchPostList = withContext(Dispatchers.IO) {
-                searchPostRepository.getSearchPostRequest(1, 1)
+                searchPostRepository.getSearchPostRequest(1, 5)
                     .onStart {
                         _state.value = _state.value.copy(isLoading = true)
                     }.catch { cause ->
