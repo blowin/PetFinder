@@ -50,8 +50,11 @@ fun RootScreen(modifier: Modifier = Modifier) {
             }
         }
     ) {
-        RootScreenNavHost(navController = navController, startMenuItem = startMenuItem)
-        it
+        RootScreenNavHost(
+            modifier = Modifier.padding(it),
+            navController = navController,
+            startMenuItem = startMenuItem
+        )
     }
 }
 
@@ -158,10 +161,12 @@ fun RootScreenBottomBar(
 
 @Composable
 fun RootScreenNavHost(
+    modifier: Modifier = Modifier,
     navController: NavHostController,
     startMenuItem: RootNavigationItem
 ) {
     NavHost(
+        modifier = modifier,
         navController = navController,
         startDestination = startMenuItem.route
     ) {
