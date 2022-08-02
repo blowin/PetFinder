@@ -53,7 +53,7 @@ public static class MappingExt
         {
             Id = self.Id.ToUuid(),
             Size = (ImageSize)self.Size,
-            Content = ByteString.CopyFrom(self.Content)
+            Base64 = self.Base64
         };
     }
 

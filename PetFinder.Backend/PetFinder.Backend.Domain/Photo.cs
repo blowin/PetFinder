@@ -6,17 +6,17 @@ public class Photo : Entity
 {
     public static readonly Photo Empty = new();
     
-    public byte[] Content { get; private set; }
+    public string Base64 { get; private set; }
 
     public ImageSize Size { get; private set; }
 
-    private Photo() : this(Array.Empty<byte>(), ImageSize.Xs)
+    private Photo() : this(string.Empty, ImageSize.Xs)
     {
     }
     
-    public Photo(byte[] content, ImageSize size)
+    public Photo(string base64, ImageSize size)
     {
-        Content = content;
+        Base64 = base64;
         Size = size;
     }
 }

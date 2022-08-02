@@ -33,7 +33,7 @@ enum ImageSize {
 
 message Photo {
 	UUID Id = 1;
-	bytes Content = 2;
+	string Base64 = 2;
 	ImageSize Size = 3;
 }
 
