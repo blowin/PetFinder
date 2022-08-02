@@ -17,6 +17,16 @@ public class FakeSearchPostRepository : FakeRepository<SearchPostDetail>, ISearc
 
     protected override IEnumerable<SearchPostDetail> GenerateItems()
     {
+        using var client = new HttpClient();
+
+        var sizes = new Dictionary<ImageSize, (int Height, int Width)>
+        {
+            { ImageSize.Xs, (100, 100) },
+            { ImageSize.Sm, (150, 150) },
+            { ImageSize.Md, (200, 200) },
+            { ImageSize.Lg, (250, 250) },
+        };
+        var sizeKeys = sizes.Keys.ToArray();
         var allItems = ((FakeRepository<User>)_userRepository).AllItems();
         return new Faker<SearchPostDetail>()
             .UseSeed(100)
@@ -25,8 +35,22 @@ public class FakeSearchPostRepository : FakeRepository<SearchPostDetail>, ISearc
             .RuleFor(e => e.Title, f => f.Lorem.Sentence())
             .RuleFor(e => e.Description, f => f.Lorem.Lines().OrNull(f))
             .RuleFor(e => e.CreateDate, f => f.Date.Past().ToUniversalTime())
-            // TODO: fixed after GetPostsPage
-            .RuleFor(e => e.Photos, f => Array.Empty<Photo>())
+            .Rules((f, e) =>
+            {
+                var result = new Photo[sizeKeys.Length];
+                for (var i = 0; i < sizeKeys.Length; i++)
+                {
+                    var size = sizeKeys[i];
+                    var requiredSize = sizes[size];
+                    var base64 = f.Image.DataUri(requiredSize.Width, requiredSize.Height);
+                    result[i] = new Photo(base64, size)
+                    {
+                        Id = f.Random.Guid()
+                    };
+                }
+
+                e.Photos = result;
+            })
             .RuleFor(e => e.User, f => ToUserDetail(f.PickRandom(allItems)))
             .GenerateForever()
             .Take(300);
@@ -35,17 +59,9 @@ public class FakeSearchPostRepository : FakeRepository<SearchPostDetail>, ISearc
     public Page<SearchPostDetail> GetPostsPage(PageRequest pageRequest, ImageSize imageSize)
     {
         var page = GetPage(pageRequest);
-        foreach (var searchPostDetail in page.Items)
-        {
-            Photo? deletePhoto = null;
-            do
-            {
-                deletePhoto = searchPostDetail.Photos.FirstOrDefault(v => v.Size != imageSize);
-                if(deletePhoto != null)
-                    searchPostDetail.Photos.Remove(deletePhoto);
 
-            } while (deletePhoto != null);
-        }
+        foreach (var searchPostDetail in page.Items)
+            searchPostDetail.Photos = searchPostDetail.Photos.Where(v => v.Size == imageSize).ToArray();
 
         return page;
     }
