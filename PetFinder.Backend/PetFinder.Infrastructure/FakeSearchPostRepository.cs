@@ -32,7 +32,23 @@ public class FakeSearchPostRepository : FakeRepository<SearchPostDetail>, ISearc
             .Take(300);
     }
 
-    public Page<SearchPostDetail> GetPostsPage(PageRequest pageRequest, ImageSize imageSize) => GetPage(pageRequest);
+    public Page<SearchPostDetail> GetPostsPage(PageRequest pageRequest, ImageSize imageSize)
+    {
+        var page = GetPage(pageRequest);
+        foreach (var searchPostDetail in page.Items)
+        {
+            Photo? deletePhoto = null;
+            do
+            {
+                deletePhoto = searchPostDetail.Photos.FirstOrDefault(v => v.Size != imageSize);
+                if(deletePhoto != null)
+                    searchPostDetail.Photos.Remove(deletePhoto);
+
+            } while (deletePhoto != null);
+        }
+
+        return page;
+    }
 
     private UserDetail ToUserDetail(User user)
     {
