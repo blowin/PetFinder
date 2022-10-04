@@ -1,4 +1,6 @@
 ﻿using PetFinder.Backend.Domain.Core;
+using PetFinder.Backend.Domain.Posts.Photos;
+using PetFinder.Backend.Domain.Users;
 
 namespace PetFinder.Backend.Domain.Posts;
 

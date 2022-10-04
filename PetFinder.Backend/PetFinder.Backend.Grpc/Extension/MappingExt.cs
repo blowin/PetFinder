@@ -1,6 +1,7 @@
 ﻿using Google.Protobuf;
 using Google.Protobuf.WellKnownTypes;
 using PetFinder.Backend.Domain.Pets;
+using PetFinder.Backend.Domain.Users;
 
 namespace PetFinder.Backend.Grpc.Extension;
 
@@ -22,7 +23,7 @@ public static class MappingExt
         };
     }
 
-    public static UserDetail ToUserDetail(this Domain.Posts.UserDetail self) => new UserDetail
+    public static UserDetail ToUserDetail(this Domain.Users.UserDetail self) => new UserDetail
     {
         Id = self.Id.ToUuid(),
         Avatar = self.Avatar?.ToNullablePhoto(),
@@ -42,12 +43,12 @@ public static class MappingExt
             new NullableBool { Data = self.Value };
     }
 
-    public static NullablePhoto ToNullablePhoto(this Domain.Photo? self)
+    public static NullablePhoto ToNullablePhoto(this Domain.Posts.Photos.Photo? self)
     {
         return self == null ? new NullablePhoto { Null = NullValue.NullValue } : new NullablePhoto { Data = self.ToPhoto() };
     }
 
-    public static Photo ToPhoto(this Domain.Photo self)
+    public static Photo ToPhoto(this Domain.Posts.Photos.Photo self)
     {
         return new Photo
         {
@@ -72,7 +73,7 @@ public static class MappingExt
         Page = self.Page
     };
 
-    public static Domain.Core.ImageSize ToCoreImageSize(this ImageSize self) => (Domain.Core.ImageSize)self;
+    public static Domain.Posts.Photos.ImageSize ToCoreImageSize(this ImageSize self) => (Domain.Posts.Photos.ImageSize)self;
 
     public static PetResponse ToPetResponse(this Pet self)
     {

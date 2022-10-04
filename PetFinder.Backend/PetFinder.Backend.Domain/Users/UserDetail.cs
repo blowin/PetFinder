@@ -1,6 +1,7 @@
 ﻿using PetFinder.Backend.Domain.Core;
+using PetFinder.Backend.Domain.Posts.Photos;
 
-namespace PetFinder.Backend.Domain.Posts;
+namespace PetFinder.Backend.Domain.Users;
 
 public record UserDetail : IEntity
 {

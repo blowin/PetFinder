@@ -1,4 +1,4 @@
-﻿namespace PetFinder.Backend.Domain.Core;
+﻿namespace PetFinder.Backend.Domain.Posts.Photos;
 
 public enum ImageSize : byte
 {

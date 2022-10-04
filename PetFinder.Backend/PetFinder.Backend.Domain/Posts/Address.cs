@@ -1,4 +1,4 @@
-﻿namespace PetFinder.Backend.Domain;
+﻿namespace PetFinder.Backend.Domain.Posts;
 
 public class Address
 {
