@@ -11,7 +11,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PetFinder.Infrastructure", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PetFinder.Backend.DependencyInjection", "PetFinder.Backend.DependencyInjection\PetFinder.Backend.DependencyInjection.csproj", "{6482DAFC-322C-4954-88DC-A0FC25460BC2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PetFinder.Tests", "PetFinder.Tests\PetFinder.Tests.csproj", "{9AB00BE2-E9C3-4418-BAD9-EB5F7FDFF037}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PetFinder.Tests", "PetFinder.Tests\PetFinder.Tests.csproj", "{9AB00BE2-E9C3-4418-BAD9-EB5F7FDFF037}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PetFinder.Backend.Blazor", "PetFinder.Backend.Blazor\PetFinder.Backend.Blazor.csproj", "{BBA3EEA5-F0CE-42CE-97D1-E34FA7B0A3E7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +41,10 @@ Global
 		{9AB00BE2-E9C3-4418-BAD9-EB5F7FDFF037}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9AB00BE2-E9C3-4418-BAD9-EB5F7FDFF037}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9AB00BE2-E9C3-4418-BAD9-EB5F7FDFF037}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BBA3EEA5-F0CE-42CE-97D1-E34FA7B0A3E7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BBA3EEA5-F0CE-42CE-97D1-E34FA7B0A3E7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BBA3EEA5-F0CE-42CE-97D1-E34FA7B0A3E7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BBA3EEA5-F0CE-42CE-97D1-E34FA7B0A3E7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
